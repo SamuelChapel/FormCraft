@@ -35,7 +35,6 @@ namespace FormCraft.Repositories.Database.Repositories
         public async Task<Answer?> GetById(Guid id)
             => await _context.Answers.FirstOrDefaultAsync(a => a.Id == id);
 
-
         public async Task<Answer> Update(Answer entity)
         {
             _context.Answers.Update(entity);
@@ -43,7 +42,5 @@ namespace FormCraft.Repositories.Database.Repositories
 
             return entity;
         }
-
-
     }
 }
