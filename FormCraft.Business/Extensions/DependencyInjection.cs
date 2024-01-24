@@ -12,10 +12,20 @@ public static class DependencyInjection
         services.AddAutoMapper(conf =>
         {
             conf.CreateMap<Answer, AnswerResponse>();
-            conf.CreateMap<CreateAnswerRequest, Answer>();
-            conf.CreateMap<DeleteAnswerRequest, Answer>();
+
+            conf.CreateMap<CreateAnswerRequest, Answer>()
+            .ForMember(a => a.Id, opt => opt
+            .MapFrom(req => req.Id.ToString()));
+
+            conf.CreateMap<DeleteAnswerRequest, Answer>()
+            .ForMember(a => a.Id, opt => opt
+            .MapFrom(req => req.Id.ToString()));
+
             conf.CreateMap<Answer, DeleteAnswerRequest>();
-            conf.CreateMap<UpdateAnswerRequest, Answer>();
+
+            conf.CreateMap<UpdateAnswerRequest, Answer>()
+            .ForMember(a => a.Id, opt => opt
+            .MapFrom(req => req.Id.ToString()));
         });
 
         return services;
