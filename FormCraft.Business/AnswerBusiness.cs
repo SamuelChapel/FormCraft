@@ -47,12 +47,12 @@ namespace FormCraft.Business
 
         public async Task<AnswerResponse> Update(UpdateAnswerRequest entity)
         {
-            var answerToUpdate = GetById(entity.Id);
-            _mapper.Map<Answer>(answerToUpdate);
-            answerToUpdate.Label = entity.Label;
+            var answerToUpdate = await GetById(entity.Id);
 
-            var answer = _mapper.Map<Answer>(answerToUpdate);
-            await _answerRepository.Update(answer);
+            answerToUpdate.Label = entity.Label;
+            answerToUpdate.Question = entity.Question;
+
+            await _answerRepository.Update(_mapper.Map<Answer>(answerToUpdate)); //Type AnswerResponse n'a pas d'ID, comment convertir en Answer
 
             return _mapper.Map<AnswerResponse>(answerToUpdate);
         }

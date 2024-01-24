@@ -33,7 +33,7 @@ namespace FormCraft.Repositories.Database.Repositories
             => await _context.Answers.ToListAsync();
 
         public async Task<Answer?> GetById(Guid id)
-            => await _context.Answers.FirstOrDefaultAsync(a => a.Id == id);
+            => await _context.Answers.FirstOrDefaultAsync(a => a.Id == id.ToString());
 
         public async Task<Answer> Update(Answer entity)
         {
