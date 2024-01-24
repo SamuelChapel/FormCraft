@@ -1,4 +1,5 @@
-﻿using FormCraft.Entities.Common;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using FormCraft.Entities.Common;
 
 namespace FormCraft.Entities;
 
@@ -7,6 +8,7 @@ public class Question : Entity, IDated
     public int Number { get; set; }
     public string Label { get; set; } = null!;
 
+    [ForeignKey(nameof(QuestionType))]
     public int QuestionTypeId { get; set; }
     public QuestionType QuestionType { get; set; } = null!;
 
