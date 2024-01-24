@@ -7,6 +7,10 @@ namespace FormCraft.Repositories.Database.Contexts;
 
 public sealed class ApplicationDbContext : IdentityDbContext<AppUser>
 {
+    public DbSet<Form> Forms { get; set; } = null!;
+    public DbSet<Question> Questions { get; set; } = null!;
+    public DbSet<Answer> Answers { get; set; } = null!;
+
     public ApplicationDbContext()
     {
     }
