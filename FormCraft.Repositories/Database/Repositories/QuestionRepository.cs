@@ -22,7 +22,6 @@ namespace FormCraft.Repositories.Database.Repositories
         public async Task<Question> Create(Question entity)
         {
             await _dbContext.Questions.AddAsync(entity);
-
             await _dbContext.SaveChangesAsync();
 
             return entity;
@@ -32,13 +31,11 @@ namespace FormCraft.Repositories.Database.Repositories
         {
             _dbContext.Questions.Remove(entity);
             await _dbContext.SaveChangesAsync();
-
         }
 
         public async Task<List<Question>> GetAll()
         {
             return await _dbContext.Questions.ToListAsync();
-
         }
 
         public async Task<Question?> GetById(Guid id)
@@ -50,6 +47,7 @@ namespace FormCraft.Repositories.Database.Repositories
         {
             _dbContext.Questions.Update(entity);
             await _dbContext.SaveChangesAsync();
+
             return entity;
         }
     }
