@@ -16,4 +16,8 @@ public class Answer : Entity, IDated
 
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
+
+    public Answer()
+    {
+    }
 }
