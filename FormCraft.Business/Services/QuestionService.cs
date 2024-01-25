@@ -4,7 +4,7 @@ using FormCraft.Repositories.Contracts;
 using FormCraft.Business.Contracts.Exceptions;
 using FormCraft.Business.Contracts.Requests.Question;
 using AutoMapper;
-using FormCraft.Business.Contracts.Response.Question;
+using FormCraft.Business.Contracts.Responses.Question;
 namespace FormCraft.Business.Service
 {
     public class QuestionService : IQuestionService
