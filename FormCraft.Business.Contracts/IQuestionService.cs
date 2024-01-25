@@ -1,14 +1,15 @@
 ﻿using FormCraft.Business.Contracts.Requests.Question;
+using FormCraft.Business.Contracts.Response.Question;
 using FormCraft.Entities;
 
 namespace FormCraft.Business.Contracts
 {
     public interface IQuestionService
     {
-        public Task<Question> GetById(string id);
-        public Task<List<Question>> GetAll();
-        public Task<Question> Create(CreateQuestionRequest request);
-        public Task<Question> Update(UpdateQuestionRequest request);
-        public Task Delete(string id);
+        public Task<QuestionResponse> Create(CreateQuestionRequest request);
+        public Task Delete(DeleteQuestionRequest request);
+        public Task<List<QuestionResponse>> GetAll();
+        public Task<QuestionResponse> GetById(string id);
+        public Task<QuestionResponse> Update(UpdateQuestionRequest request);
     }
 }

@@ -12,7 +12,6 @@ namespace FormCraft.Business.Contracts.Requests.Question
           int Number,
           string Label,
           int QuestionTypeId,
-          List<Answer> Answers,
           string FormId
         ) : IRequest;
 }
