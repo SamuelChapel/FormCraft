@@ -1,5 +1,7 @@
 ﻿using FormCraft.Business.Contracts.Requests.Answer;
+using FormCraft.Business.Contracts.Requests.Form;
 using FormCraft.Business.Contracts.Response.Answer;
+using FormCraft.Business.Contracts.Response.Form;
 using FormCraft.Business.Contracts.Requests.Question;
 using FormCraft.Business.Contracts.Response.Question;
 using FormCraft.Entities;
@@ -24,6 +26,15 @@ public static class DependencyInjection
             conf.CreateMap<DeleteQuestionRequest, Question>();
             conf.CreateMap<Question, DeleteQuestionRequest>();
             conf.CreateMap<UpdateQuestionRequest, Question>();
+            conf.CreateMap<DeleteAnswerRequest, Answer>();
+            conf.CreateMap<Answer, DeleteAnswerRequest>();
+            conf.CreateMap<UpdateAnswerRequest, Answer>();
+
+            conf.CreateMap<Form, FormResponse>();
+            conf.CreateMap<CreateFormRequest, Form>();
+            conf.CreateMap<DeleteFormRequest, Form>();
+            conf.CreateMap<Form, DeleteFormRequest>();
+            conf.CreateMap<UpdateFormRequest, Form>();
         });
 
         return services;
