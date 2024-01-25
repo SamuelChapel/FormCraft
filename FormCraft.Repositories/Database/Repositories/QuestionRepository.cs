@@ -2,11 +2,6 @@
 using FormCraft.Repositories.Contracts;
 using FormCraft.Repositories.Database.Contexts;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FormCraft.Repositories.Database.Repositories
 {
@@ -38,7 +33,7 @@ namespace FormCraft.Repositories.Database.Repositories
             return await _dbContext.Questions.ToListAsync();
         }
 
-        public async Task<Question?> GetById(Guid id)
+        public async Task<Question?> GetById(string id)
         {
             return await _dbContext.Questions.FindAsync(id);
         }
