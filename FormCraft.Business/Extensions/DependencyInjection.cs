@@ -13,19 +13,13 @@ public static class DependencyInjection
         {
             conf.CreateMap<Answer, AnswerResponse>();
 
-            conf.CreateMap<CreateAnswerRequest, Answer>()
-            .ForMember(a => a.Id, opt => opt
-            .MapFrom(req => req.Id.ToString()));
+            conf.CreateMap<CreateAnswerRequest, Answer>();
 
-            conf.CreateMap<DeleteAnswerRequest, Answer>()
-            .ForMember(a => a.Id, opt => opt
-            .MapFrom(req => req.Id.ToString()));
+            conf.CreateMap<DeleteAnswerRequest, Answer>();
 
             conf.CreateMap<Answer, DeleteAnswerRequest>();
 
-            conf.CreateMap<UpdateAnswerRequest, Answer>()
-            .ForMember(a => a.Id, opt => opt
-            .MapFrom(req => req.Id.ToString()));
+            conf.CreateMap<UpdateAnswerRequest, Answer>();
         });
 
         return services;

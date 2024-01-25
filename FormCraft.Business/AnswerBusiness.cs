@@ -16,7 +16,6 @@ namespace FormCraft.Business
     public class AnswerBusiness : IAnswerBusiness
     {
         private readonly IAnswerRepository _answerRepository;
-
         private readonly IMapper _mapper;
 
         public AnswerBusiness(IAnswerRepository answerRepository, IMapper mapper)
@@ -25,34 +24,50 @@ namespace FormCraft.Business
             _mapper = mapper;
         }
 
-        public async Task<AnswerResponse> Create(CreateAnswerRequest entity)
+        public async Task<AnswerResponse> Create(CreateAnswerRequest request)
         {
-            var answer = _mapper.Map<Answer>(entity);
+            var answer = _mapper.Map<Answer>(request);
+            answer.Id = Guid.NewGuid().ToString();
+
             await _answerRepository.Create(answer);
 
             return _mapper.Map<AnswerResponse>(answer);
         }
 
-        public async Task Delete(DeleteAnswerRequest entity)
+        public async Task Delete(DeleteAnswerRequest request)
         {
-            var answer = _mapper.Map<Answer>(entity);
-            await _answerRepository.Delete(answer);
+            var answerToDelete = await GetById(request.Id);
+            var answer = _mapper.Map<Answer>(answerToDelete);
+
+            if (answerToDelete is not null)
+            {
+                await _answerRepository.Delete(answer);
+            }
         }
 
         public async Task<List<AnswerResponse>> GetAll()
             => _mapper.Map<List<AnswerResponse>>(await _answerRepository.GetAll());
 
-        public async Task<AnswerResponse?> GetById(Guid id)
-            => _mapper.Map<AnswerResponse>(await _answerRepository.GetById(id));
-
-        public async Task<AnswerResponse> Update(UpdateAnswerRequest entity)
+        public async Task<AnswerResponse> GetById(string id)
         {
-            var answerToUpdate = await GetById(entity.Id);
+            try
+            {
+                return _mapper.Map<AnswerResponse>(await _answerRepository.GetById(id));
+            }
+            catch (Exception)
+            {
+                throw new Exception("Answer not found");
+            }
+        }
 
-            answerToUpdate.Label = entity.Label;
-            answerToUpdate.Question = entity.Question;
+        public async Task<AnswerResponse> Update(UpdateAnswerRequest request)
+        {
+            var answerToUpdate = await GetById(request.Id);
+            var answer = _mapper.Map<Answer>(answerToUpdate);
 
-            await _answerRepository.Update(_mapper.Map<Answer>(answerToUpdate)); //Type AnswerResponse n'a pas d'ID, comment convertir en Answer
+            answer.Label = request.Label;
+
+            await _answerRepository.Update(answer);
 
             return _mapper.Map<AnswerResponse>(answerToUpdate);
         }
