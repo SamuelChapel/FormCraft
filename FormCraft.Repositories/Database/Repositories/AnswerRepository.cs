@@ -2,11 +2,6 @@
 using FormCraft.Repositories.Contracts;
 using FormCraft.Repositories.Database.Contexts;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FormCraft.Repositories.Database.Repositories
 {
@@ -32,7 +27,7 @@ namespace FormCraft.Repositories.Database.Repositories
         public async Task<List<Answer>> GetAll()
             => await _context.Answers.ToListAsync();
 
-        public async Task<Answer?> GetById(Guid id)
+        public async Task<Answer?> GetById(string id)
             => await _context.Answers.FirstOrDefaultAsync(a => a.Id == id);
 
         public async Task<Answer> Update(Answer entity)
