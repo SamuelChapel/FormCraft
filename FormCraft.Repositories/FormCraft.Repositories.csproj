@@ -22,8 +22,4 @@
     <ProjectReference Include="..\FormCraft.Repositories.Contracts\FormCraft.Repositories.Contracts.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Database\Configurations\" />
-  </ItemGroup>
-
 </Project>

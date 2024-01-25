@@ -6,6 +6,9 @@ namespace FormCraft.Entities;
 public class Form : Entity, IDated
 {
     public string Label { get; set; } = null!;
+
+    [ForeignKey(nameof(Creator))]
+    public string CreatorId { get; set; } = null!;
     public AppUser Creator { get; set; } = null!;
 
     [ForeignKey(nameof(FormType))]
