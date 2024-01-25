@@ -14,6 +14,8 @@ public class Question : Entity, IDated
 
     public string FormId { get; set; } = null!;
 
+    public string FormId { get; set; } = null!;
+
     public List<Answer> Answers { get; set; } = [];
 
     public DateTime CreatedAt { get; set; }
