@@ -27,12 +27,14 @@ namespace FormCraft.Business.Service
         public async Task Delete(DeleteQuestionRequest request)
         {
             var questionToDelete = await GetById(request.Id);
-            var question = _mapper.Map<Question>(questionToDelete);
+            
 
             if (questionToDelete is not null)
             {
+                var question = _mapper.Map<Question>(questionToDelete);
                 await _questionRepository.Delete(question);
             }
+            throw new NotFoundException("Question not found");
         }
 
         public async Task<List<QuestionResponse>> GetAll()
@@ -40,18 +42,18 @@ namespace FormCraft.Business.Service
 
         public async Task<QuestionResponse> GetById(string id)
         {
-            if (await _questionRepository.GetById(id) is Question u)
+            if (await _questionRepository.GetById(id) is Question q)
             {
-                return _mapper.Map<QuestionResponse>(u); 
+                return _mapper.Map<QuestionResponse>(q); 
             }
-            throw new NotFoundException("Question non trouvé");
+            throw new NotFoundException("Question not found");
         }
 
         public async Task<QuestionResponse> Update(UpdateQuestionRequest request)
         {
             var questionToUpdate = await GetById(request.Id);
             var question = _mapper.Map<Question>(questionToUpdate);
-            question.Label = request?.Label?? question.Label;
+            question.Label = request.Label ?? question.Label;
             await _questionRepository.Update(question);
 
             return _mapper.Map<QuestionResponse>(question);
