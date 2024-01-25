@@ -5,7 +5,7 @@ using FormCraft.Business.Contracts.Responses.Answer;
 using FormCraft.Entities;
 using FormCraft.Repositories.Contracts;
 
-namespace FormCraft.Business
+namespace FormCraft.Business.Services
 {
     public class AnswerBusiness : IAnswerBusiness
     {
