@@ -19,6 +19,13 @@ public sealed class ApplicationDbContext : IdentityDbContext<AppUser>
     {
     }
 
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+
+        base.OnModelCreating(builder);
+    }
+
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         ChangeTracker
