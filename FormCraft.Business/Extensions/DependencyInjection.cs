@@ -1,10 +1,9 @@
 ﻿using FormCraft.Business.Contracts.Requests.Answer;
 using FormCraft.Business.Contracts.Requests.Form;
-using FormCraft.Business.Contracts.Response.Answer;
-using FormCraft.Business.Contracts.Response.Form;
 using FormCraft.Business.Contracts.Requests.Question;
-using FormCraft.Business.Contracts.Response.Question;
-using FormCraft.Business.Contracts.Response.Form;
+using FormCraft.Business.Contracts.Responses.Answer;
+using FormCraft.Business.Contracts.Responses.Form;
+using FormCraft.Business.Contracts.Responses.Question;
 using FormCraft.Entities;
 using Microsoft.Extensions.DependencyInjection;
 

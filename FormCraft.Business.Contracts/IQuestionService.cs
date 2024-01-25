@@ -1,6 +1,5 @@
 ﻿using FormCraft.Business.Contracts.Requests.Question;
-using FormCraft.Business.Contracts.Response.Question;
-using FormCraft.Entities;
+using FormCraft.Business.Contracts.Responses.Question;
 
 namespace FormCraft.Business.Contracts
 {

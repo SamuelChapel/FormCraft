@@ -1,12 +1,5 @@
-﻿using FormCraft.Business.Contracts.Requests.Answer;
-using FormCraft.Business.Contracts.Requests.Form;
-using FormCraft.Business.Contracts.Response.Answer;
-using FormCraft.Business.Contracts.Response.Form;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FormCraft.Business.Contracts.Requests.Form;
+using FormCraft.Business.Contracts.Responses.Form;
 
 namespace FormCraft.Business.Contracts
 {

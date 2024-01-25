@@ -1,22 +1,16 @@
 ﻿using AutoMapper;
 using FormCraft.Business.Contracts;
-using FormCraft.Business.Contracts.Common;
 using FormCraft.Business.Contracts.Requests.Form;
-using FormCraft.Business.Contracts.Response.Form;
+using FormCraft.Business.Contracts.Responses.Form;
 using FormCraft.Entities;
 using FormCraft.Repositories.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace FormCraft.Business
+namespace FormCraft.Business.Services
 {
     public class FormBusiness : IFormBusiness
     {
         readonly IFormRepository _formRepository;
-        IMapper _mapper;
+        readonly IMapper _mapper;
 
         public FormBusiness(IFormRepository formRepository, IMapper mapper)
         {

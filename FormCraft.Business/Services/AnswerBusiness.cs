@@ -1,15 +1,9 @@
 ﻿using AutoMapper;
 using FormCraft.Business.Contracts;
 using FormCraft.Business.Contracts.Requests.Answer;
-using FormCraft.Business.Contracts.Response.Answer;
+using FormCraft.Business.Contracts.Responses.Answer;
 using FormCraft.Entities;
 using FormCraft.Repositories.Contracts;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FormCraft.Business
 {
