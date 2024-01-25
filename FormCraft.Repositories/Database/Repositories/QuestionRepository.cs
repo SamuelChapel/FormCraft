@@ -38,7 +38,7 @@ namespace FormCraft.Repositories.Database.Repositories
             return await _dbContext.Questions.ToListAsync();
         }
 
-        public async Task<Question?> GetById(Guid id)
+        public async Task<Question?> GetById(string id)
         {
             return await _dbContext.Questions.FindAsync(id);
         }
