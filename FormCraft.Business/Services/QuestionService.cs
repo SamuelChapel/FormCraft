@@ -1,11 +1,12 @@
-﻿using FormCraft.Business.Contracts;
-using FormCraft.Entities;
-using FormCraft.Repositories.Contracts;
+﻿using AutoMapper;
+using FormCraft.Business.Contracts;
 using FormCraft.Business.Contracts.Exceptions;
 using FormCraft.Business.Contracts.Requests.Question;
-using AutoMapper;
 using FormCraft.Business.Contracts.Responses.Question;
-namespace FormCraft.Business.Service
+using FormCraft.Entities;
+using FormCraft.Repositories.Contracts;
+
+namespace FormCraft.Business.Services
 {
     public class QuestionService : IQuestionService
     {
