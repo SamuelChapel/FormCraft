@@ -10,7 +10,9 @@ public class Question : Entity, IDated
 
     [ForeignKey(nameof(QuestionType))]
     public int QuestionTypeId { get; set; }
-    public QuestionType QuestionType { get; set; } = null!;
+    public QuestionType? QuestionType { get; set; } = null!;
+
+    public string FormId { get; set; } = null!;
 
     public List<Answer> Answers { get; set; } = [];
 
