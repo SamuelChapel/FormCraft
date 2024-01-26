@@ -1,9 +1,11 @@
-﻿using FormCraft.Business.Contracts.Requests.Answer;
+﻿using FormCraft.Business.Contracts;
+using FormCraft.Business.Contracts.Requests.Answer;
 using FormCraft.Business.Contracts.Requests.Form;
 using FormCraft.Business.Contracts.Requests.Question;
 using FormCraft.Business.Contracts.Responses.Answer;
 using FormCraft.Business.Contracts.Responses.Form;
 using FormCraft.Business.Contracts.Responses.Question;
+using FormCraft.Business.Services;
 using FormCraft.Entities;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -33,6 +35,12 @@ public static class DependencyInjection
             conf.CreateMap<Form, DeleteFormRequest>();
             conf.CreateMap<UpdateFormRequest, Form>();
         });
+        services.AddTransient<IAnswerBusiness, AnswerBusiness>();
+        services.AddTransient<IQuestionService, QuestionService>();
+        services.AddTransient<IFormBusiness, FormBusiness>();
+
+
+
 
         return services;
     }
