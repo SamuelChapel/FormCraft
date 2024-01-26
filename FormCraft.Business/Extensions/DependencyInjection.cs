@@ -17,8 +17,8 @@ public static class DependencyInjection
         {
             conf.CreateMap<Answer, AnswerResponse>();
             conf.CreateMap<CreateAnswerRequest, Answer>();
-            conf.CreateMap<DeleteQuestionRequest, Answer>();
-            conf.CreateMap<Answer, DeleteQuestionRequest>();
+            conf.CreateMap<DeleteAnswerRequest, Answer>();
+            conf.CreateMap<Answer, DeleteAnswerRequest>();
             conf.CreateMap<UpdateAnswerRequest, Answer>();
 
             conf.CreateMap<Question, QuestionResponse>();
@@ -26,9 +26,6 @@ public static class DependencyInjection
             conf.CreateMap<DeleteQuestionRequest, Question>();
             conf.CreateMap<Question, DeleteQuestionRequest>();
             conf.CreateMap<UpdateQuestionRequest, Question>();
-            conf.CreateMap<DeleteAnswerRequest, Answer>();
-            conf.CreateMap<Answer, DeleteAnswerRequest>();
-            conf.CreateMap<UpdateAnswerRequest, Answer>();
 
             conf.CreateMap<Form, FormResponse>();
             conf.CreateMap<CreateFormRequest, Form>();
