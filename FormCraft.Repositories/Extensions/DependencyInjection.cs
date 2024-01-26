@@ -17,7 +17,11 @@ public static class DependencyInjection
         });
 
         services.AddTransient<IAnswerRepository, AnswerRepository>();
-
+        services.AddTransient<IQuestionRepository, QuestionRepository>();
+        services.AddTransient<IFormRepository, FormRepository>();
+        
         return services;
     }
+    
+
 }
