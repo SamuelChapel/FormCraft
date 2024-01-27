@@ -5,7 +5,7 @@ namespace FormCraft.Entities;
 
 public class AppUser : IdentityUser, IDated
 {
-    public string Address { get; set; } = null!;
+    public string? Address { get; set; } = null!;
 
     public List<AppUserAnswer> AppUserAnswers { get; set; } = [];
     public List<Form> Forms { get; set; } = [];
