@@ -12,9 +12,9 @@ public static class DataSeeds
         var questionTypes = QuestionTypesSeeds();
         var formStatus = FormStatusSeeds();
 
-        var appUserIds = Enumerable.Range(0, 5).Select(i =>  Guid.NewGuid().ToString()).Distinct().ToList();
+        var appUserIds = Enumerable.Range(0, 10).Select(i =>  Guid.NewGuid().ToString()).Distinct().ToList();
 
-        var forms = FormsSeeds(appUserIds, formTypes, questionTypes, formStatus, 10);
+        var forms = FormsSeeds(appUserIds, formTypes, questionTypes, formStatus, 50);
         var questions = forms.SelectMany(f => f.Questions).ToList();
         var answers = questions.SelectMany(q => q.Answers).ToList();
 
@@ -134,7 +134,8 @@ public static class DataSeeds
             .RuleFor(a => a.UpdatedAt, (f, current) => f.Date.Between(current.CreatedAt, DateTime.UtcNow))
             .RuleFor(a => a.AppUserAnswers, (f, current) =>
             {
-                var formsToAnswer = formsValidated.Where(f => f.CreatorId != current.Id).OrderBy(_ => Random.Shared.Next()).Take(Random.Shared.Next(0, formsValidated.Count /2)).ToList();
+                var formsNotOwned = formsValidated.Where(f => f.CreatorId != current.Id).ToList();
+                var formsToAnswer = formsNotOwned.OrderBy(_ => Random.Shared.Next()).Take(Random.Shared.Next(0, formsNotOwned.Count /2)).ToList();
 
                 var answers = formsToAnswer.SelectMany(form => form.Questions.Select(q => f.Random.CollectionItem(q.Answers).Id)).ToList();
 
