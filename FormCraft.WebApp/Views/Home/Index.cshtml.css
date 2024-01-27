@@ -1,0 +1,161 @@
+﻿.index-main {
+    position: relative;
+    width: 100%;
+}
+
+.create-survey {
+    width: 100%;
+    height: 750px;
+    padding-left: 30px;
+}
+
+.create-survey-text {
+    width: 856px;
+    height: 104px;
+    font-family: 'K2D';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 80px;
+}
+
+.from-scratch-text {
+    padding-left: 100px;
+    width: 551px;
+    height: 132px;
+    font-family: 'K2D';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 40px;
+}
+
+.choose-type {
+    background: #184066;
+    padding: 50px;
+}
+
+.choose-type-text-block {
+    position: relative;
+    width: 100%;
+    right: 50px;
+    text-align: end;
+}
+
+.choose-type-text {
+    color: white;
+    font-family: 'K2D';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 80px;
+    padding-right: 30px;
+}
+
+.custom-survey-text {
+    color: white;
+    font-family: 'K2D';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+}
+
+.templates-container {
+    padding: 100px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    color: #FFFFFF;
+}
+
+.template {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.template-text {
+    font-size: 40px;
+    color: #FFFFFF;
+}
+
+.template-image {
+    width: 316.88px;
+    height: 358px;
+    background: #FF8E3D;
+    box-shadow: 0px 4px 4px 5px rgba(16, 46, 73, 0.5);
+}
+
+.collect-results {
+    padding: 50px;
+    display:flex;
+    flex-direction: column;
+}
+
+.collect-result-text-block {
+    padding: 50px;
+}
+
+.collect-result-text {
+    font-family: 'K2D';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 80px;
+    color: #575757;
+}
+
+.collect-result-text-sub {
+    text-align: center;
+    width: 702px;
+    font-family: 'K2D';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 40px;
+    color: #575757;
+}
+
+.line-graphs-img {
+    position: relative;
+    width: 622px;
+    height: 407px;
+    left: 753px;
+}
+
+.computer-graphs-img {
+    position: relative;
+    width: 836px;
+    height: 507px;
+    left: 30px;
+}
+
+.begin-form-craft {
+    width: 100%;
+    height: 211px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: #184066;
+}
+
+.begin-form-text {
+    font-family: 'K2D';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 50px;
+    color: #FF8E3D;
+}
+
+.craft-button {
+    /* Craft btn */
+    width: 238.98px;
+    height: 72.15px;
+    background: #4D87CB;
+    border: 3.60725px solid #184066;
+    border-radius: 9.01813px;
+    font-family: 'K2D';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 27.0544px;
+    color: #184066;
+}
