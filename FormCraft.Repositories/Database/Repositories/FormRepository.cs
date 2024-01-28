@@ -29,8 +29,9 @@ namespace FormCraft.Repositories.Database.Repositories
 
         public async Task<Form?> GetById(string id)
             => await _context.Forms
-            .Include(f => f.Questions)
+            .Include(f => f.Questions.OrderBy(q => q.Number))
             .ThenInclude(q => q.Answers)
+            .AsSplitQuery()
             .FirstOrDefaultAsync(f => f.Id == id);
 
         public async Task<Form> Update(Form entity)

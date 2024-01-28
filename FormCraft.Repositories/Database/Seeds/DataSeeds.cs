@@ -92,17 +92,20 @@ public static class DataSeeds
             .RuleFor(a => a.CreatedAt, f => f.Date.Past(2))
             .RuleFor(a => a.UpdatedAt, (f, current) => f.Date.Between(current.CreatedAt, DateTime.UtcNow))
             .RuleFor(a => a.Questions, (f, current) =>
-                Enumerable.Range(1, 20).Select(i => QuestionsSeed(current.Id, questionTypes)).ToList())
+                Enumerable.Range(1, 20)
+                          .Select(i => QuestionsSeed(current.Id, i, questionTypes))
+                          .ToList())
             .Generate()).ToList();
     }
 
-    private static Question QuestionsSeed(string formId, List<QuestionType> questionTypes)
+    private static Question QuestionsSeed(string formId, int number, List<QuestionType> questionTypes)
     {
         return new Faker<Question>()
             .RuleFor(q => q.Id, Guid.NewGuid().ToString())
-            .RuleFor(q => q.Label, f => f.Lorem.Sentence(5) + " ?")
+            .RuleFor(q => q.Label, f => f.Random.Words(f.Random.Number(3, 8)) + " ?")
             .RuleFor(q => q.QuestionTypeId, f => f.Random.CollectionItem(questionTypes).Id)
             .RuleFor(q => q.FormId, formId)
+            .RuleFor(q => q.Number, number)
             .RuleFor(a => a.CreatedAt, f => f.Date.Past(2))
             .RuleFor(a => a.UpdatedAt, (f, current) => f.Date.Between(current.CreatedAt, DateTime.UtcNow))
             .RuleFor(a => a.Answers, (f, current) =>
