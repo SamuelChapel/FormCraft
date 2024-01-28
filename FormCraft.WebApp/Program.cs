@@ -7,9 +7,9 @@ using FormCraft.WebApp.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services
-        .AddApi()
+        .AddWebApp()
         .AddBusiness()
-        .AddRepository(builder.Configuration);
+        .AddRepositories(builder.Configuration);
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
     builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
