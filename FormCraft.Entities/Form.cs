@@ -9,15 +9,15 @@ public class Form : Entity, IDated
 
     [ForeignKey(nameof(Creator))]
     public string CreatorId { get; set; } = null!;
-    public AppUser Creator { get; set; } = null!;
+    public AppUser? Creator { get; set; } = null!;
 
     [ForeignKey(nameof(FormType))]
     public int FormTypeId { get; set; }
-    public FormType FormType { get; set; } = null!;
+    public FormType? FormType { get; set; } = null!;
 
     [ForeignKey(nameof(Status))]
     public int StatusId { get; set; }
-    public Status Status { get; set; } = null!;
+    public Status? Status { get; set; } = null!;
 
     public List<Question> Questions { get; set; } = [];
 

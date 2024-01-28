@@ -22,13 +22,16 @@ namespace FormCraft.Repositories.Database.Repositories
         }
 
         public async Task Delete(Form entity)
-            => await _context.Forms.Where(f => f.Id == entity.Id).ExecuteDeleteAsync<Form>();
+            => await _context.Forms.Where(f => f.Id == entity.Id).ExecuteDeleteAsync();
 
         public async Task<List<Form>> GetAll()
             => await _context.Forms.ToListAsync();
 
         public async Task<Form?> GetById(string id)
-            => await _context.Forms.FirstOrDefaultAsync(f => f.Id == id);
+            => await _context.Forms
+            .Include(f => f.Questions)
+            .ThenInclude(q => q.Answers)
+            .FirstOrDefaultAsync(f => f.Id == id);
 
         public async Task<Form> Update(Form entity)
         {

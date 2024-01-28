@@ -30,6 +30,7 @@ public static class DependencyInjection
             conf.CreateMap<UpdateQuestionRequest, Question>();
 
             conf.CreateMap<Form, FormResponse>();
+            conf.CreateMap<Form, FormWithQuestionsResponse>();
             conf.CreateMap<CreateFormRequest, Form>();
             conf.CreateMap<DeleteFormRequest, Form>();
             conf.CreateMap<Form, DeleteFormRequest>();

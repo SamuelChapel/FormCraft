@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FormCraft.Business.Contracts;
+using FormCraft.Business.Contracts.Exceptions;
 using FormCraft.Business.Contracts.Requests.Form;
 using FormCraft.Business.Contracts.Responses.Form;
 using FormCraft.Entities;
@@ -41,11 +42,11 @@ namespace FormCraft.Business.Services
         public async Task<List<FormResponse>> GetAll()
             => _mapper.Map<List<FormResponse>>(await _formRepository.GetAll());
 
-        public async Task<FormResponse> GetById(string id)
+        public async Task<FormWithQuestionsResponse> GetById(string id)
         {
             var form = await _formRepository.GetById(id);
 
-            return form is null ? throw new Exception("Form not found") : _mapper.Map<FormResponse>(form);
+            return form is null ? throw new NotFoundException("Form not found") : _mapper.Map<FormWithQuestionsResponse>(form);
         }
 
         public async Task<FormResponse> Update(UpdateFormRequest request)
