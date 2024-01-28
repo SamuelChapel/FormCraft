@@ -30,12 +30,16 @@ namespace FormCraft.Repositories.Database.Repositories
 
         public async Task<List<Question>> GetAll()
         {
-            return await _dbContext.Questions.ToListAsync();
+            return await _dbContext.Questions
+                .Include(q => q.Answers)
+                .ToListAsync();
         }
 
         public async Task<Question?> GetById(string id)
         {
-            return await _dbContext.Questions.FindAsync(id);
+            return await _dbContext.Questions
+                .Include(q => q.Answers)
+                .FirstOrDefaultAsync(q => q.Id == id);
         }
 
         public async Task<Question> Update(Question entity)

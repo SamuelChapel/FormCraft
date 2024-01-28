@@ -54,10 +54,10 @@ public static class DataSeeds
     {
         return
         [
-            new() { Id = 1, Label = "Open" },
-            new() { Id = 2, Label = "RadioButton" },
-            new() { Id = 3, Label = "Checkbox" },
-            new() { Id = 4, Label = "Dropdown" },
+            new() { Id = QuestionTypeEnum.Open, Label = "Open" },
+            new() { Id = QuestionTypeEnum.RadioButton, Label = "RadioButton" },
+            new() { Id = QuestionTypeEnum.Checkbox, Label = "Checkbox" },
+            new() { Id = QuestionTypeEnum.Dropdown, Label = "Dropdown" },
         ];
     }
 
@@ -106,7 +106,7 @@ public static class DataSeeds
             .RuleFor(a => a.CreatedAt, f => f.Date.Past(2))
             .RuleFor(a => a.UpdatedAt, (f, current) => f.Date.Between(current.CreatedAt, DateTime.UtcNow))
             .RuleFor(a => a.Answers, (f, current) =>
-                Enumerable.Range(0, current.QuestionTypeId == 1 ? 1 : f.Random.Number(2, 5))
+                Enumerable.Range(0, current.QuestionTypeId == QuestionTypeEnum.Open ? 1 : f.Random.Number(2, 5))
                           .Select(i => AnswersSeed(current.Id)).ToList())
             .Generate();
     }

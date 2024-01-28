@@ -9,7 +9,7 @@ public class Question : Entity, IDated
     public string Label { get; set; } = null!;
 
     [ForeignKey(nameof(QuestionType))]
-    public int QuestionTypeId { get; set; }
+    public QuestionTypeEnum QuestionTypeId { get; set; }
     public QuestionType? QuestionType { get; set; } = null!;
 
     [ForeignKey(nameof(Form))]
