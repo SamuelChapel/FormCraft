@@ -13,7 +13,7 @@ public static class DependencyInjection
     {
         services.AddDbContext<ApplicationDbContext>(o =>
         {
-            o.UseSqlServer(configuration.GetConnectionString("FormCraft"), b => b.MigrationsAssembly("FormCraft.Repositories"));
+            o.UseSqlServer(configuration.GetConnectionString("FormCraftNAS"), b => b.MigrationsAssembly("FormCraft.Repositories"));
         });
 
         services.AddTransient<IAnswerRepository, AnswerRepository>();
