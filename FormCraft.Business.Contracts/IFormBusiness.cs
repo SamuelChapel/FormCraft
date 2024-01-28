@@ -8,7 +8,7 @@ namespace FormCraft.Business.Contracts
         public Task<FormResponse> Create(CreateFormRequest request);
         public Task Delete(DeleteFormRequest request);
         public Task<List<FormResponse>> GetAll();
-        public Task<FormResponse> GetById(string id);
+        public Task<FormWithQuestionsResponse> GetById(string id);
         public Task<FormResponse> Update(UpdateFormRequest request);
     }
 }
