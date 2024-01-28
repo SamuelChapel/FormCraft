@@ -36,7 +36,7 @@ public class AnswerController(IAnswerBusiness answerBusiness) : ControllerBase
     {
         var answer = await _answerBusiness.Create(request);
 
-        return CreatedAtAction(nameof(GetById), new { Id = answer.Id }, answer);
+        return CreatedAtAction(nameof(GetById), new { answer.Id }, answer);
     }
 
     [HttpPut]
