@@ -1,0 +1,21 @@
+﻿.question-container {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    background-color: white;
+
+    border: 1px solid black;
+    border-radius: 8px;
+
+    padding: 24px;
+}
+
+.answers-container {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+}

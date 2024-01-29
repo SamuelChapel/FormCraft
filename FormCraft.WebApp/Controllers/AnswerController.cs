@@ -1,26 +1,25 @@
 ﻿using FormCraft.Business.Contracts;
 using FormCraft.Business.Contracts.Requests.Answer;
 using FormCraft.Business.Contracts.Responses.Answer;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FormCraft.WebApp.Controllers
 {
     public class AnswerController : Controller
     {
-        private IAnswerBusiness _answerBusiness;
+        private readonly IAnswerBusiness _answerBusiness;
 
         public AnswerController(IAnswerBusiness answerBusiness)
         {
-            this._answerBusiness = answerBusiness;
+            _answerBusiness = answerBusiness;
         }
 
         // GET: AnswerController/Details/5
         public async Task<ActionResult> Details(string id)
         {
             //return View(await _answerBusiness.GetById(id));
-            
-            return View("Test",new AnswerResponse("adada","La reponse d biboubar dzojjjoaoaoa de maatyj","addadad"));
+
+            return View("Test", new AnswerResponse("adada", "La reponse d biboubar dzojjjoaoaoa de maatyj", "addadad"));
         }
 
         // POST: AnswerController/Create
@@ -44,7 +43,7 @@ namespace FormCraft.WebApp.Controllers
         public async Task<ActionResult> Update(UpdateAnswerRequest request)
         {
             try
-            { 
+            {
                 return Json(await _answerBusiness.Update(request));
             }
             catch
@@ -60,7 +59,7 @@ namespace FormCraft.WebApp.Controllers
         {
             try
             {
-                 
+
                 await _answerBusiness.Delete(new DeleteAnswerRequest(Id));
                 return View();
             }
