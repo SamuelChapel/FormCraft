@@ -14,8 +14,7 @@ public class AnswersViewComponent : ViewComponent
             QuestionTypeEnum.RadioButton => View("RadioButtonAnswer", answers),
             QuestionTypeEnum.Checkbox => View("CheckboxAnswer", answers),
             QuestionTypeEnum.Dropdown => View("DropDownAnswer", answers),
-            _ => View(),
+            _ => View(), //default
         };
-
     }
 }
