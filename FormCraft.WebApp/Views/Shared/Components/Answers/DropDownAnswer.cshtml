@@ -1,0 +1,8 @@
+﻿@model AnswerResponse[]
+
+<select class="form-select" aria-label="Default select example">
+    @foreach (var answer in @Model)
+    {
+        <option value=@answer.Id>@answer.Label</option>
+    }
+</select>

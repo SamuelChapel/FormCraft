@@ -3,13 +3,9 @@ using FormCraft.Entities;
 using FormCraft.Repositories.Database.Contexts;
 using FormCraft.Repositories.Extensions;
 using FormCraft.WebApp.Extensions;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
-
-
+{
     builder.Services
         .AddWebApp()
         .AddBusiness()
@@ -20,7 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
         .AddEntityFrameworkStores<ApplicationDbContext>();
 
     builder.Services.AddControllersWithViews();
-
+}
 
 var app = builder.Build();
 {
@@ -48,5 +44,4 @@ var app = builder.Build();
     app.MapRazorPages();
 
     app.Run();
-
 }
