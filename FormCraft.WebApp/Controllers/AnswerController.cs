@@ -15,19 +15,14 @@ namespace FormCraft.WebApp.Controllers
             this._answerBusiness = answerBusiness;
         }
 
-        // GET: AnswerController
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         // GET: AnswerController/Details/5
         public async Task<ActionResult> Details(string id)
         {
-            return View(await _answerBusiness.GetById(id));
-
+            //return View(await _answerBusiness.GetById(id));
+            
+            return View("Test",new AnswerResponse("adada","La reponse d biboubar dzojjjoaoaoa de maatyj","addadad"));
         }
-        
+
         // POST: AnswerController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -61,11 +56,12 @@ namespace FormCraft.WebApp.Controllers
         // POST: AnswerController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(DeleteAnswerRequest request)
+        public async Task<ActionResult> Delete(string Id)
         {
             try
             {
-                await _answerBusiness.Delete(request);
+                 
+                await _answerBusiness.Delete(new DeleteAnswerRequest(Id));
                 return View();
             }
             catch
