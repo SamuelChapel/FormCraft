@@ -1,0 +1,8 @@
+﻿@model AnswerResponse
+
+<form>
+    <nav>
+        <a>@Model.Label</a>
+        <button asp-action="Delete" asp-controller="Answer" asp-route-id="@Model.Id">Delete</button>
+    </nav>
+</form>

@@ -8,3 +8,4 @@ public record FormResponse(
     string CreatorId,
     FormTypeEnum FormTypeId,
     StatusEnum StatusId) : IRequest;
+    string Label) : IRequest;

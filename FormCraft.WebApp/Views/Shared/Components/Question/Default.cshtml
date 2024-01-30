@@ -1,1 +1,9 @@
 ﻿@model QuestionResponse
+
+<div class="question-container">
+    <p>@Model.Number) @Model.Label</p>
+
+    <div class="answers-container">
+        <vc:answers question-type-id="@Model.QuestionTypeId" answers="@Model.Answers.ToArray()" />
+    </div>
+</div>

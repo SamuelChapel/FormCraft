@@ -1,1 +1,12 @@
 ﻿@model FormWithQuestionsResponse
+
+<div class="text-center form-container">
+    <h2>@Model.Label</h2>
+
+    @foreach (QuestionResponse question in Model.Questions)
+    {
+        <div class="col-lg-6">
+            <vc:question question="@question" />
+        </div>
+    }
+</div>

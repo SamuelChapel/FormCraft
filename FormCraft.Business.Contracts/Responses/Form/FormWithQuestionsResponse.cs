@@ -9,4 +9,5 @@ public record FormWithQuestionsResponse(
     string CreatorId,
     FormTypeEnum FormTypeId,
     StatusEnum StatusId,
+    string Label,
     List<QuestionResponse> Questions) : IRequest;
