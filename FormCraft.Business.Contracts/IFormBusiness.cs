@@ -1,5 +1,6 @@
 ﻿using FormCraft.Business.Contracts.Requests.Form;
 using FormCraft.Business.Contracts.Responses.Form;
+using FormCraft.Entities;
 
 namespace FormCraft.Business.Contracts
 {
@@ -11,7 +12,5 @@ namespace FormCraft.Business.Contracts
         public Task<FormWithQuestionsResponse> GetById(string id);
         public Task<FormResponse> Update(UpdateFormRequest request);
         public Task<List<SearchFormResponse>> Search(SearchFormRequest searchRequest);
-
-
     }
 }
