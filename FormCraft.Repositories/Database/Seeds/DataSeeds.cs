@@ -12,13 +12,13 @@ public static class DataSeeds
         var questionTypes = QuestionTypesSeeds();
         var formStatus = FormStatusSeeds();
 
-        var appUserIds = Enumerable.Range(0, 10).Select(i =>  Guid.NewGuid().ToString()).Distinct().ToList();
+        var appUserIds = Enumerable.Range(0, 10).Select(i => Guid.NewGuid().ToString()).Distinct().ToList();
 
         var forms = FormsSeeds(appUserIds, formTypes, questionTypes, formStatus, 50);
         var questions = forms.SelectMany(f => f.Questions).ToList();
         var answers = questions.SelectMany(q => q.Answers).ToList();
 
-        var appUsers = AppUserSeeds(appUserIds, forms.Where(f => f.StatusId != 1).ToList());
+        var appUsers = AppUserSeeds(appUserIds, forms.Where(f => f.StatusId != StatusEnum.InProgress).ToList());
         var appUserAnswers = appUsers.SelectMany(a => a.AppUserAnswers).ToList();
 
         // Remove collections fields for ef core
@@ -44,9 +44,9 @@ public static class DataSeeds
     {
         return
         [
-            new() { Id = 1, Label = "Survey" },
-            new() { Id = 2, Label = "Comment" },
-            new() { Id = 3, Label = "Evaluation" }
+            new() { Id = FormTypeEnum.Survey, Label = "Survey" },
+            new() { Id = FormTypeEnum.Comment, Label = "Comment" },
+            new() { Id = FormTypeEnum.Evaluation, Label = "Evaluation" }
         ];
     }
 
@@ -61,13 +61,13 @@ public static class DataSeeds
         ];
     }
 
-    private static List<FormType> FormQuestionTypesSeeds()
+    private static List<FormType> FormQuestionTypesSeeds() //Doublons ???
     {
         return
         [
-            new() { Id = 1, Label = "Survey" },
-            new() { Id = 2, Label = "Comment" },
-            new() { Id = 3, Label = "Evaluation" }
+            new() { Id = FormTypeEnum.Survey, Label = "Survey" },
+            new() { Id = FormTypeEnum.Comment, Label = "Comment" },
+            new() { Id = FormTypeEnum.Evaluation, Label = "Evaluation" }
         ];
     }
 
@@ -75,9 +75,9 @@ public static class DataSeeds
     {
         return
         [
-            new() { Id = 1, Label = "InProgress" },
-            new() { Id = 2, Label = "Validated" },
-            new() { Id = 3, Label = "Closed" }
+            new() { Id = StatusEnum.InProgress, Label = "InProgress" },
+            new() { Id = StatusEnum.Validated, Label = "Validated" },
+            new() { Id = StatusEnum.Closed, Label = "Closed" }
         ];
     }
 
@@ -138,7 +138,7 @@ public static class DataSeeds
             .RuleFor(a => a.AppUserAnswers, (f, current) =>
             {
                 var formsNotOwned = formsValidated.Where(f => f.CreatorId != current.Id).ToList();
-                var formsToAnswer = formsNotOwned.OrderBy(_ => Random.Shared.Next()).Take(Random.Shared.Next(0, formsNotOwned.Count /2)).ToList();
+                var formsToAnswer = formsNotOwned.OrderBy(_ => Random.Shared.Next()).Take(Random.Shared.Next(0, formsNotOwned.Count / 2)).ToList();
 
                 var answers = formsToAnswer.SelectMany(form => form.Questions.Select(q => f.Random.CollectionItem(q.Answers).Id)).ToList();
 

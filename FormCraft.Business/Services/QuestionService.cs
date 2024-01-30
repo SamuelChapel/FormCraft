@@ -10,15 +10,21 @@ namespace FormCraft.Business.Services
 {
     public class QuestionService : IQuestionService
     {
+        private readonly IFormBusiness _formBusiness;
         private readonly IQuestionRepository _questionRepository;
         private readonly IMapper _mapper;
-        public QuestionService(IQuestionRepository questionRepository,IMapper mapper)
+        public QuestionService(IQuestionRepository questionRepository, IMapper mapper, IFormBusiness formBusiness)
         {
             _questionRepository = questionRepository;
             _mapper = mapper;
+            _formBusiness = formBusiness;
         }
         public async Task<QuestionResponse> Create(CreateQuestionRequest request)
         {
+            var form = await _formBusiness.GetById(request.FormId);
+            if (form.StatusId != StatusEnum.InProgress)
+                throw new BadRequestException("From status not available");
+
             var question = _mapper.Map<Question>(request);
             question.Id = Guid.NewGuid().ToString();
             await _questionRepository.Create(question);
@@ -28,7 +34,11 @@ namespace FormCraft.Business.Services
         public async Task Delete(DeleteQuestionRequest request)
         {
             var questionToDelete = await GetById(request.Id);
-            
+
+            var form = await _formBusiness.GetById(questionToDelete.FormId);
+
+            if (form.StatusId != StatusEnum.InProgress)
+                throw new BadRequestException("From status not available");
 
             if (questionToDelete is not null)
             {
@@ -45,7 +55,7 @@ namespace FormCraft.Business.Services
         {
             if (await _questionRepository.GetById(id) is Question q)
             {
-                return _mapper.Map<QuestionResponse>(q); 
+                return _mapper.Map<QuestionResponse>(q);
             }
             throw new NotFoundException("Question not found");
         }
@@ -53,6 +63,12 @@ namespace FormCraft.Business.Services
         public async Task<QuestionResponse> Update(UpdateQuestionRequest request)
         {
             var questionToUpdate = await GetById(request.Id);
+
+            var form = await _formBusiness.GetById(questionToUpdate.FormId);
+
+            if (form.StatusId != StatusEnum.InProgress)
+                throw new BadRequestException("From status not available");
+
             var question = _mapper.Map<Question>(questionToUpdate);
             question.Label = request.Label ?? question.Label;
             await _questionRepository.Update(question);

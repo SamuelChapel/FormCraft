@@ -25,6 +25,8 @@ namespace FormCraft.Business.Services
 
             form.Id = Guid.NewGuid().ToString();
 
+            form.StatusId = StatusEnum.InProgress;
+
             await _formRepository.Create(form);
 
             var formResponse = _mapper.Map<FormResponse>(form);
@@ -32,9 +34,15 @@ namespace FormCraft.Business.Services
             return formResponse;
         }
 
+        //Add Validate method ?
+        //Add Close method ?
+
         public async Task Delete(DeleteFormRequest request)
         {
-            var formToDelete = GetById(request.Id);
+            var formToDelete = await GetById(request.Id);
+
+            if (formToDelete.StatusId != StatusEnum.InProgress)
+                throw new Exception("Form status not available");
 
             await _formRepository.Delete(_mapper.Map<Form>(formToDelete));
         }
@@ -52,6 +60,14 @@ namespace FormCraft.Business.Services
         public async Task<FormResponse> Update(UpdateFormRequest request)
         {
             var formToUpdate = await GetById(request.Id);
+
+            if (formToUpdate.StatusId != StatusEnum.InProgress
+                || request.StatusId != null
+                && (formToUpdate.StatusId == StatusEnum.Validated && request.StatusId != StatusEnum.Closed || formToUpdate.StatusId == StatusEnum.InProgress && request.StatusId != StatusEnum.Validated))
+            {
+                throw new BadRequestException("Form status not available");
+            }
+
             var form = _mapper.Map<Form>(formToUpdate);
 
             form.Label = request.Label ?? form.Label;
@@ -61,7 +77,6 @@ namespace FormCraft.Business.Services
             await _formRepository.Update(form);
 
             return _mapper.Map<FormResponse>(form);
-
         }
     }
 }
