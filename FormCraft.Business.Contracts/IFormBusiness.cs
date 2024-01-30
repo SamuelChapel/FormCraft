@@ -10,5 +10,8 @@ namespace FormCraft.Business.Contracts
         public Task<List<FormResponse>> GetAll();
         public Task<FormWithQuestionsResponse> GetById(string id);
         public Task<FormResponse> Update(UpdateFormRequest request);
+        public Task<List<SearchFormResponse>> Search(SearchFormRequest searchRequest);
+
+
     }
 }

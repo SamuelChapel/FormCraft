@@ -35,6 +35,9 @@ public static class DependencyInjection
             conf.CreateMap<DeleteFormRequest, Form>();
             conf.CreateMap<Form, DeleteFormRequest>();
             conf.CreateMap<UpdateFormRequest, Form>();
+
+            conf.CreateMap<SearchFormRequest, Form>();
+            conf.CreateMap<Form, SearchFormResponse>();
         });
         services.AddTransient<IAnswerBusiness, AnswerBusiness>();
         services.AddTransient<IQuestionService, QuestionService>();

@@ -1,4 +1,5 @@
-﻿using FormCraft.Entities.Common;
+﻿using FormCraft.Entities;
+using FormCraft.Entities.Common;
 
 namespace FormCraft.Repositories.Contracts.Common;
 
@@ -16,4 +17,11 @@ public interface IReadRepository<TEntity> where TEntity : Entity
     /// </summary>
     /// <returns>returns the <seealso cref="List{TEntity}"/></returns>
     Task<List<TEntity>> GetAll();
+
+    /// <summary>
+    /// Search method to find with string input
+    /// </summary>
+    /// <param name="search"></param>
+    /// <returns>returns the <typeparamref name="TEntity"/> if it's found</returns>
+    Task<List<Form>> Search(FormTypeEnum? type, StatusEnum? status, string? label, int? order);
 }
