@@ -7,5 +7,5 @@ public record FormResponse(
     string Id,
     string CreatorId,
     FormTypeEnum FormTypeId,
-    StatusEnum StatusId) : IRequest;
+    StatusEnum StatusId,
     string Label) : IRequest;
