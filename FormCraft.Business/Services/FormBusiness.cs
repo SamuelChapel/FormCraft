@@ -35,12 +35,14 @@ namespace FormCraft.Business.Services
         }
 
         //Add Validate method ?
+        //Add Close method ?
 
         public async Task Delete(DeleteFormRequest request)
         {
             var formToDelete = await GetById(request.Id);
 
-            if (formToDelete.StatusId != StatusEnum.InProgress) throw new Exception("Form status not available");
+            if (formToDelete.StatusId != StatusEnum.InProgress)
+                throw new Exception("Form status not available");
 
             await _formRepository.Delete(_mapper.Map<Form>(formToDelete));
         }
@@ -59,10 +61,11 @@ namespace FormCraft.Business.Services
         {
             var formToUpdate = await GetById(request.Id);
 
-            if (formToUpdate.StatusId != StatusEnum.InProgress)
+            if (formToUpdate.StatusId != StatusEnum.InProgress
+                || request.StatusId != null
+                && (formToUpdate.StatusId == StatusEnum.Validated && request.StatusId != StatusEnum.Closed || formToUpdate.StatusId == StatusEnum.InProgress && request.StatusId != StatusEnum.Validated))
             {
-                throw new Exception("Form status not available");
-                //return _mapper.Map<FormResponse>(formToUpdate);
+                throw new BadRequestException("Form status not available");
             }
 
             var form = _mapper.Map<Form>(formToUpdate);
@@ -71,9 +74,6 @@ namespace FormCraft.Business.Services
             form.StatusId = request.StatusId ?? form.StatusId;
             form.FormTypeId = request.FormTypeId ?? form.FormTypeId;
 
-            await _formRepository.Update(form);
-
-            form.StatusId = StatusEnum.Validated;
             await _formRepository.Update(form);
 
             return _mapper.Map<FormResponse>(form);
