@@ -1,4 +1,5 @@
-﻿using FormCraft.Business.Contracts;
+﻿using AutoMapper;
+using FormCraft.Business.Contracts;
 using FormCraft.Business.Contracts.Exceptions;
 using FormCraft.Business.Contracts.Requests.Form;
 using FormCraft.Business.Contracts.Responses.Form;
@@ -10,17 +11,20 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FormCraft.WebApp.Controllers;
 
-public class FormController(IFormBusiness formBusiness, UserManager<AppUser> userManager) : Controller
+public class FormController(IFormBusiness formBusiness, UserManager<AppUser> userManager, IMapper mapper) : Controller
 {
     private readonly IFormBusiness _formBusiness = formBusiness;
     private readonly UserManager<AppUser> _userManager = userManager;
+    private readonly IMapper _mapper = mapper;
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    [ProducesResponseType(200)]
+    public async Task<ActionResult<List<FormResponse>>> Index()
     {
-        var forms = await _formBusiness.GetAll();
+        var formsResponse = await _formBusiness.GetAll();
+        var formsVm = _mapper.Map<FormIndexViewModel>(formsResponse);
 
-        return View(forms);
+        return View(formsVm);
     }
 
     [HttpGet]
@@ -62,12 +66,14 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
     [HttpGet("{id}")]
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
-    public async Task<ActionResult<FormResponse>> GetById(string id)
+    public async Task<ActionResult<FormResponse>> Details(string id)
     {
         try
         {
             var reponse = await _formBusiness.GetById(id);
-            return View(reponse); //Vue à créer
+            var formVm = _mapper.Map<FormDetailsViewModel>(reponse);
+
+            return View(formVm);
         }
         catch (NotFoundException)
         {
@@ -75,22 +81,38 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
         }
     }
 
-    [HttpGet]
-    [ProducesResponseType(200)]
-    public async Task<ActionResult<List<FormResponse>>> GetAll()
-    {
-        var formsResponse = await _formBusiness.GetAll();
-
-        return View(formsResponse); //Vue à créer
-    }
-
     [HttpPost("Search")]
     [ProducesResponseType(200)]
     public async Task<ActionResult<List<SearchFormResponse>>> Search(SearchFormRequest request)
     {
-        var searchResult = await _formBusiness.Search(request);
+        var Id = (await _userManager.GetUserAsync(HttpContext.User))?.Id;
+        request = request with { CurrentUserId = Id };
 
-        return View(searchResult); //A voir
+        var searchResult = await _formBusiness.Search(request);
+        var formsVm = _mapper.Map<FormSearchViewModel>(searchResult);
+
+
+        if (searchResult.Count > 1)
+            return RedirectToAction(nameof(Index), formsVm);
+
+        else if (searchResult.Count == 1)
+            return RedirectToAction(nameof(Details), formsVm);
+
+        else
+            return NotFound();
+    }
+
+    [HttpPost]
+    [ProducesResponseType(201)]
+    public async Task<ActionResult<FormResponse>> Create(CreateFormRequest request)
+    {
+        if (!ModelState.IsValid)
+            return View(request);
+
+
+        var user = await _formBusiness.Create(request);
+
+        return RedirectToAction(nameof(Details), new { id = user.Id });
     }
 
     [HttpPut]
@@ -102,7 +124,7 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
         {
             var formReponse = await _formBusiness.Update(request);
 
-            return RedirectToAction(nameof(GetById), new { id = formReponse.Id });
+            return RedirectToAction(nameof(Index), new { id = formReponse.Id });
         }
         catch (BadHttpRequestException e)
         {
@@ -114,7 +136,7 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
         }
     }
 
-    [HttpPost] // POST Rather than DELETE
+    [HttpPost] // POST rather than DELETE
     [ProducesResponseType(204)]
     [ProducesResponseType(404)]
     public async Task<IActionResult> Delete(DeleteFormRequest request)
@@ -122,7 +144,7 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
         try
         {
             await _formBusiness.Delete(request);
-            return RedirectToAction(nameof(GetAll));
+            return RedirectToAction(nameof(Index));
             //return NoContent();
         }
         catch (NotFoundException e)

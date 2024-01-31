@@ -2,6 +2,7 @@
 using FormCraft.Repositories.Contracts;
 using FormCraft.Repositories.Database.Contexts;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FormCraft.Repositories.Database.Repositories
 {
@@ -25,10 +26,10 @@ namespace FormCraft.Repositories.Database.Repositories
             => await _context.Forms.Where(f => f.Id == entity.Id).ExecuteDeleteAsync();
 
         public async Task<List<Form>> GetAll()
-            => await _context.Forms.ToListAsync();
+            => await _context.Forms.Include(f => f.Creator).ToListAsync();
 
         public async Task<Form?> GetById(string id)
-            => await _context.Forms
+            => await _context.Forms/*.Include(f => f.Creator.UserName)*/
             .Include(f => f.Questions.OrderBy(q => q.Number))
             .ThenInclude(q => q.Answers)
             .AsSplitQuery()
@@ -42,12 +43,13 @@ namespace FormCraft.Repositories.Database.Repositories
             return entity;
         }
 
-        public async Task<List<Form>> Search(FormTypeEnum? type, StatusEnum? status, string? label, int? order)
+        public async Task<List<Form>> Search(FormTypeEnum? type, StatusEnum? status, string? label, int? order, string? currentUserId)
         {
             var result = await _context.Forms.Where(f =>
             EF.Functions.Like(f.Label, $"%{label}%") ||
             (f.FormTypeId == type) ||
-            (f.StatusId == status)
+            (f.StatusId == status) ||
+            (f.CreatorId == currentUserId)
             ).ToListAsync();
 
             return order switch

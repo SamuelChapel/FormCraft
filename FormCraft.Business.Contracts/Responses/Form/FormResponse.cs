@@ -3,9 +3,13 @@ using FormCraft.Entities;
 
 namespace FormCraft.Business.Contracts.Responses.Form;
 
-public record FormResponse(
-    string Id,
-    string CreatorId,
-    FormTypeEnum FormTypeId,
-    StatusEnum StatusId,
-    string Label) : IRequest;
+public class FormResponse : IRequest
+{
+    public string Id { get; set; } = null!;
+    public string CreatorId { get; set; } = null!;
+    public string CreatorName { get; set; } = null!;
+    public FormTypeEnum FormTypeId { get; set; }
+    public StatusEnum StatusId { get; set; }
+    public string Label { get; set; } = null!;
+}
+

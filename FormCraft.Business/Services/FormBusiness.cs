@@ -8,16 +8,10 @@ using FormCraft.Repositories.Contracts;
 
 namespace FormCraft.Business.Services
 {
-    public class FormBusiness : IFormBusiness
+    public class FormBusiness(IFormRepository formRepository, IMapper mapper) : IFormBusiness
     {
-        readonly IFormRepository _formRepository;
-        readonly IMapper _mapper;
-
-        public FormBusiness(IFormRepository formRepository, IMapper mapper)
-        {
-            _formRepository = formRepository;
-            _mapper = mapper;
-        }
+        readonly IFormRepository _formRepository = formRepository;
+        readonly IMapper _mapper = mapper;
 
         public async Task<FormResponse> Create(CreateFormRequest request)
         {
@@ -48,7 +42,9 @@ namespace FormCraft.Business.Services
         }
 
         public async Task<List<FormResponse>> GetAll()
-            => _mapper.Map<List<FormResponse>>(await _formRepository.GetAll());
+        {
+            return _mapper.Map<List<FormResponse>>(await _formRepository.GetAll());
+        }
 
         public async Task<FormWithQuestionsResponse> GetById(string id)
         {
@@ -83,7 +79,7 @@ namespace FormCraft.Business.Services
         {
             _mapper.Map<Form>(searchRequest);
 
-            var forms = await _formRepository.Search(searchRequest.FormTypeId, searchRequest.StatusId, searchRequest.Label, searchRequest.Order);
+            var forms = await _formRepository.Search(searchRequest.FormTypeId, searchRequest.StatusId, searchRequest.Label, searchRequest.Order, searchRequest.CurrentUserId);
 
             return _mapper.Map<List<SearchFormResponse>>(forms);
         }

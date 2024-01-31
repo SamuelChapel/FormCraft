@@ -5,6 +5,7 @@ namespace FormCraft.Business.Contracts.Requests.Form
 {
     public record SearchFormRequest(
         string? Label = null,
+        string? CurrentUserId = null,
         StatusEnum? StatusId = null,
         FormTypeEnum? FormTypeId = null,
         int? Order = null) : IRequest;
