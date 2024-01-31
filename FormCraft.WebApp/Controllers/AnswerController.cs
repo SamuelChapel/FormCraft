@@ -17,9 +17,9 @@ namespace FormCraft.WebApp.Controllers
         // GET: AnswerController/Details/5
         public async Task<ActionResult> Details(string id)
         {
-            //return View(await _answerBusiness.GetById(id));
+            return View(await _answerBusiness.GetById(id));
 
-            return View("Test", new AnswerResponse("adada", "La reponse d biboubar dzojjjoaoaoa de maatyj", "addadad"));
+           
         }
 
         // POST: AnswerController/Create
