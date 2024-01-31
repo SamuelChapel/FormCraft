@@ -1,15 +1,14 @@
 ﻿using FormCraft.Business.Contracts;
 using FormCraft.Business.Contracts.Requests.Question;
-using FormCraft.Business.Contracts.Responses.Question;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FormCraft.WebApp.Controllers
 {
-    public class QuestionControlleur : Controller
+    public class QuestionController : Controller
     {
         private readonly IQuestionService _questionService;
 
-        public QuestionControlleur(IQuestionService questionService)
+        public QuestionController(IQuestionService questionService)
         {
             _questionService = questionService;
         }
