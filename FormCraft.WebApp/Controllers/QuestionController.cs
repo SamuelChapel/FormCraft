@@ -5,53 +5,53 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FormCraft.WebApp.Controllers;
 
-public class QuestionController : Controller
-{
-    private readonly IQuestionService _questionService;
-
-    public QuestionController(IQuestionService questionService)
+    public class QuestionController : Controller
     {
-        _questionService = questionService;
-    }
+        private readonly IQuestionService _questionService;
 
-    public async Task<ActionResult> Details(string id)
-    {
-        return View(await _questionService.GetById(id));
-    }
+        public QuestionController(IQuestionService questionService)
+        {
+            _questionService = questionService;
+        }
 
-    [HttpPost]
-    public async Task<ActionResult> Create(CreateQuestionRequest request)
-    {
+        public async Task<ActionResult> Details(string id)
+        {
+            return View(await _questionService.GetById(id));
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Create(CreateQuestionRequest request)
+        {
         var question = await _questionService.Create(request);
 
         return ViewComponent("Question", new { question, QuestionViewEnum.Create });
-    }
+        }
 
-    [HttpPost]
-    public async Task<ActionResult> Update(UpdateQuestionRequest request)
-    {
-        try
+        [HttpPost]
+        public async Task<ActionResult> Update(UpdateQuestionRequest request)
         {
-            return Json(await _questionService.Update(request));
+            try
+            {
+                return Json(await _questionService.Update(request));
+            }
+            catch
+            {
+                return View();
+            }
         }
-        catch
+
+        [HttpPost]
+        public async Task<ActionResult> Delete(string Id)
         {
-            return View();
+            try
+            {
+
+                await _questionService.Delete(new DeleteQuestionRequest(Id));
+                return View();
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
-
-    [HttpPost]
-    public async Task<ActionResult> Delete(string Id)
-    {
-        try
-        {
-
-            await _questionService.Delete(new DeleteQuestionRequest(Id));
-            return View();
-        }
-        catch
-        {
-            return View();
-        }
-    }
-}
