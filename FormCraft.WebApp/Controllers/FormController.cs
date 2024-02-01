@@ -53,17 +53,6 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
         return View(formViewModel);
     }
 
-    [HttpGet]
-    public async Task<IActionResult> Details(string id)
-    {
-        var form = await _formBusiness.GetById(id);
-
-        if (form is null)
-            return RedirectToAction(nameof(Index));
-
-        return View(form);
-    }
-
     [HttpGet("{id}")]
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
