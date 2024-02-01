@@ -1,0 +1,58 @@
+﻿@model FormViewModel
+
+<form id="create-form" asp-action="Create" asp-controller="Form">
+
+    <div class="create-form-container">
+
+        <div class="create-form-title-container">
+
+            <input id="form-title" name="formTitle" asp-for="@Model.CreateFormModel.Label" type="Text" onblur="" />
+
+            <select id="form-type" name="formType" onchange="">
+                @foreach (FormTypeEnum formType in Enum.GetValues<FormTypeEnum>())
+                {
+                    <option value="@formType">@formType</option>
+                }
+            </select>
+        </div>
+
+        <hr class="hr hr-blurry" />
+
+        <div class="question-list-container">
+            @foreach (QuestionDetailsViewModel question in Model.Questions)
+            {
+                
+            }
+        </div>
+
+        <button id="add-question-button" type="button" class="btn btn-primary">Add question</button>
+
+    </div>
+</form>
+
+@section scripts
+{
+    <script>
+        $(function () {
+            $('#create-form').submit(e => {
+                console.log(e.target.formTitle.value, e.target.formType.value);
+                $.post('/Form/Create', {
+                    label: e.target.formTitle.value,
+                    formType: e.target.formType.value
+                },
+                    (formResponse) => {
+                        console.log(formResponse);
+                    }
+                );
+                e.preventDefault();
+            });
+        });
+
+        $(function () {
+            $('#add-question-button').on('click', e => {
+                $('question-list-container').append('<div class=""></div>')
+                console.log('add-question');
+            })
+        })
+    </script>
+}

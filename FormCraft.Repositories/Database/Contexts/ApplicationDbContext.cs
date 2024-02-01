@@ -1,6 +1,5 @@
 ﻿using FormCraft.Entities;
 using FormCraft.Entities.Common;
-using FormCraft.Repositories.Database.Seeds;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,7 +23,7 @@ public sealed class ApplicationDbContext : IdentityDbContext<AppUser>
     {
         builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
 
-        builder.AddSeeds();
+        //builder.AddSeeds();
 
         base.OnModelCreating(builder);
     }

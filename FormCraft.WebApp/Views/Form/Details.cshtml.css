@@ -1,0 +1,21 @@
+﻿.form-create {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 50px 0;
+}
+
+.form-buttons-container {
+	display: flex;
+	justify-content: space-around;
+	width: 50%;
+	margin: 20px;
+}
+
+.form-buttons-container button {
+	width: fit-content;
+	padding: 10px 40px;
+	border: 2px solid;
+	border-radius: 10px;
+}

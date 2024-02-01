@@ -1,0 +1,23 @@
+﻿.create-form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 30px;
+    margin: 30px;
+}
+
+.create-form-title-container {
+    display: flex;
+    gap: 30px;
+}
+
+.question-list-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin: 30px;
+}

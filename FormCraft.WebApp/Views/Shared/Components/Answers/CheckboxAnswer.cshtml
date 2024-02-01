@@ -3,8 +3,8 @@
 @foreach (var answer in @Model)
 {
     <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="@answer.Id">
-        <label class="form-check-label" for="flexCheckDefault">
+        <input class="form-check-input" type="checkbox" id="@answer.Id">
+        <label class="form-check-label">
             @answer.Label
         </label>
     </div>

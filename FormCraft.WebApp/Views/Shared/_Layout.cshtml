@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/colors.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/FormCraft.WebApp.styles.css" asp-append-version="true" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 </head>
 <body>
     <header>
@@ -33,7 +37,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Form" asp-action="Details" asp-route-id="100cc5ce-fef6-4e16-9d36-9a417ba5b727">Form</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Answer" asp-action="Details">CRAFT Now</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Form" asp-action="Create">CRAFT Now</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
@@ -52,9 +56,5 @@
             &copy; 2024 - FormCraft - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

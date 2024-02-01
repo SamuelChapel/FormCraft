@@ -10,7 +10,7 @@ public class AnswersViewComponent : ViewComponent
     {
         return questionTypeId switch
         {
-            QuestionTypeEnum.Open => View("TextBoxAnswer", answers),
+            QuestionTypeEnum.Open => View("TextBoxAnswer", answers[0]),
             QuestionTypeEnum.RadioButton => View("RadioButtonAnswer", answers),
             QuestionTypeEnum.Checkbox => View("CheckboxAnswer", answers),
             QuestionTypeEnum.Dropdown => View("DropDownAnswer", answers),
