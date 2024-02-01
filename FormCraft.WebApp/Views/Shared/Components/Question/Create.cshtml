@@ -1,2 +1,14 @@
 ﻿@model CreateQuestionModel
 
+<div class="create-question">
+    <div class="create-question-title-container">
+        <input id="question-title" asp-for="Id" type="text" class="form-control" required>
+
+        <select class="form-select" aria-label="Default select example">
+            @foreach (QuestionTypeEnum questionType in Enum.GetValues<QuestionTypeEnum>())
+            {
+                <option value=@questionType>@questionType</option>
+            }
+        </select>
+    </div>
+</div>

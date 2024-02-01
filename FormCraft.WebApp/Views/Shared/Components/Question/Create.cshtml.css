@@ -1,0 +1,9 @@
+﻿.create-question {
+    display: flex;
+    flex-direction: column;
+}
+
+.create-question-title-container {
+    display: flex;
+    justify-content: space-between;
+}

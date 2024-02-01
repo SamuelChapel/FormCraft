@@ -38,7 +38,7 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
                 CreatorId = user!.Id,
                 FormTypeId = form.FormTypeId,
                 Label = form.Label,
-                StatusId = Entities.StatusEnum.InProgress
+                StatusId = StatusEnum.InProgress
             },
             Questions = []
         };

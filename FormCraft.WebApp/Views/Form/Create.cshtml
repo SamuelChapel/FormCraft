@@ -21,7 +21,7 @@
         <div class="question-list-container">
             @foreach (QuestionDetailsViewModel question in Model.Questions)
             {
-                
+
             }
         </div>
 
@@ -36,6 +36,7 @@
         $(function () {
             $('#create-form').submit(e => {
                 console.log(e.target.formTitle.value, e.target.formType.value);
+
                 $.post('/Form/Create', {
                     label: e.target.formTitle.value,
                     formType: e.target.formType.value
@@ -50,9 +51,22 @@
 
         $(function () {
             $('#add-question-button').on('click', e => {
-                $('question-list-container').append('<div class=""></div>')
-                console.log('add-question');
-            })
-        })
+                console.log(e.target);
+
+                $.post('/Question/Create', {
+                    Number: $('#question-list-container').length + 1,
+                    Label: 'Question Title',
+                    QuestionTypeId: 1,
+                    FormId: '@Model.CreateFormModel.Id'
+                                                },
+                    (questionResponse) => {
+                        console.log(questionResponse);
+                        $('question-list-container').append(questionResponse);
+                    }
+                );
+
+                e.preventDefault();
+            });
+        });
     </script>
 }
