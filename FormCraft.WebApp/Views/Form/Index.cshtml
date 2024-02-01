@@ -4,24 +4,40 @@
 
 <h2>Form List</h2>
 
-<table>
+<table class="table table-light table-hover">
     <thead>
         <tr>
             <th>CreatorName</th>
             <th>Label</th>
             <th>FormTypeId</th>
             <th>StatusId</th>
+            <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var form in Model)
         {
-            <tr>
+            <tr id="row-@form.Id">
                 <td>@form.CreatorName</td>
                 <td>@form.Label</td>
                 <td>@form.FormTypeId</td>
                 <td>@form.StatusId</td>
+                <td>
+                    <a asp-controller="Form" asp-action="Details" asp-route-id="@form.Id" class="btn btn-outline-success"> Go to</a>
+                </td>
+                <td>
+                    @if (form.StatusId == StatusEnum.InProgress)
+                    {
+                        <a class="btn btn-outline-danger delete" data-form-id="@form.Id"> Delete</a>
+                    }
+                </td>
             </tr>
         }
     </tbody>
 </table>
+
+@section scripts {
+    <script src="~/js/FormList.js" asp-append-version="true"></script>
+}
+           

@@ -30,7 +30,7 @@ public static class DependencyInjection
             conf.CreateMap<Form, FormResponse>()
                 .ForMember(dest => dest.CreatorName, opt => opt.MapFrom(src => src.Creator!.UserName));
 
-            conf.CreateMap<Form, FormWithQuestionsResponse>();
+            conf.CreateMap<Form, FormWithQuestionsResponse>().ReverseMap();
             conf.CreateMap<Form, DeleteFormRequest>().ReverseMap();
             conf.CreateMap<CreateFormRequest, Form>();
             conf.CreateMap<UpdateFormRequest, Form>();

@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Shared\Components\Createquestion\**" />
+    <Content Remove="Views\Shared\Components\Createquestion\**" />
+    <EmbeddedResource Remove="Views\Shared\Components\Createquestion\**" />
+    <None Remove="Views\Shared\Components\Createquestion\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.1" />
@@ -25,10 +32,6 @@
     <ProjectReference Include="..\FormCraft.Entities\FormCraft.Entities.csproj" />
     <ProjectReference Include="..\FormCraft.Repositories.Contracts\FormCraft.Repositories.Contracts.csproj" />
     <ProjectReference Include="..\FormCraft.Repositories\FormCraft.Repositories.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Shared\Components\Createquestion\" />
   </ItemGroup>
 
 </Project>

@@ -5,6 +5,7 @@ namespace FormCraft.WebApp.ViewModels.FormViewModels
 {
     public class FormIndexViewModel : IRequest
     {
+        public string Id { get; set; } = null!;
         public string CreatorName { get; set; } = null!;
         public FormTypeEnum FormTypeId { get; set; }
         public StatusEnum StatusId { get; set; }

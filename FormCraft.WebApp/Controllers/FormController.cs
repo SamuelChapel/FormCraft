@@ -20,12 +20,14 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
 
     [HttpGet]
     [ProducesResponseType(200)]
-    public async Task<ActionResult<List<FormIndexViewModel>>> Index()
+    public async Task<ActionResult<List<FormIndexViewModel>>> List()
     {
-        var formsResponse = await _formBusiness.GetAll();
+        await Console.Out.WriteLineAsync("Action called");
+
+        List<FormResponse>? formsResponse = await _formBusiness.GetAll();
         var formsVm = _mapper.Map<List<FormIndexViewModel>>(formsResponse);
 
-        return View(formsVm);
+        return View("Index",formsVm);
     }
 
     [HttpGet]
@@ -61,7 +63,7 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
         try
         {
             var reponse = await _formBusiness.GetById(id);
-            var formVm = _mapper.Map<FormDetailsViewModel>(reponse); //config mapper
+            var formVm = _mapper.Map<FormDetailsViewModel>(reponse);
 
             return View(formVm);
         }
@@ -90,19 +92,6 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
 
         else
             return NotFound();
-    }
-
-    [HttpPost]
-    [ProducesResponseType(201)]
-    public async Task<ActionResult<FormResponse>> Create(CreateFormRequest request)
-    {
-        if (!ModelState.IsValid)
-            return View(request);
-
-
-        var user = await _formBusiness.Create(request);
-
-        return RedirectToAction(nameof(Details), new { id = user.Id });
     }
 
     [HttpPut]
@@ -134,8 +123,8 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
         try
         {
             await _formBusiness.Delete(request);
-            return RedirectToAction(nameof(Index));
-            //return NoContent();
+            //return RedirectToAction(nameof(List));
+            return NoContent();
         }
         catch (NotFoundException e)
         {
