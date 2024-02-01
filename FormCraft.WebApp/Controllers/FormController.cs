@@ -1,13 +1,17 @@
 ﻿using FormCraft.Business.Contracts;
 using FormCraft.Business.Contracts.Requests.Form;
+using FormCraft.Entities;
+using FormCraft.WebApp.Models;
 using FormCraft.WebApp.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FormCraft.WebApp.Controllers;
 
-public class FormController(IFormBusiness formBusiness) : Controller
+public class FormController(IFormBusiness formBusiness, UserManager<AppUser> userManager) : Controller
 {
     private readonly IFormBusiness _formBusiness = formBusiness;
+    private readonly UserManager<AppUser> _userManager = userManager;
 
     [HttpGet]
     public async Task<IActionResult> Index()
@@ -18,19 +22,28 @@ public class FormController(IFormBusiness formBusiness) : Controller
     }
 
     [HttpGet]
-    public IActionResult Create()
+    public async Task<IActionResult> Create()
     {
-        return View(new FormViewModel());
-    }
+        var user = await _userManager.GetUserAsync(HttpContext.User);
 
-    [HttpPost]
-    public async Task<IActionResult> Create(FormViewModel formViewModel)
-    {
-        var request = new CreateFormRequest(formViewModel.CreateFormModel.Label, formViewModel.CreateFormModel.FormType);
+        var request = new CreateFormRequest("Form Title", Entities.FormTypeEnum.Survey, user!.Id);
 
-        var result =  await _formBusiness.Create(request);
+        var form = await _formBusiness.Create(request);
 
-        return Json(result);
+        var formViewModel = new FormViewModel()
+        {
+            CreateFormModel = new CreateFormModel()
+            {
+                Id = form.Id,
+                CreatorId = user!.Id,
+                FormTypeId = form.FormTypeId,
+                Label = form.Label,
+                StatusId = Entities.StatusEnum.InProgress
+            },
+            Questions = []
+        };
+
+        return View(formViewModel);
     }
 
     [HttpGet]

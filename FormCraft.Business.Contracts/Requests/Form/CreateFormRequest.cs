@@ -5,5 +5,6 @@ namespace FormCraft.Business.Contracts.Requests.Form
 {
     public record CreateFormRequest(
         string Label,
-        FormTypeEnum FormTypeId) : IRequest;
+        FormTypeEnum FormTypeId,
+        string CreatorId) : IRequest;
 }
