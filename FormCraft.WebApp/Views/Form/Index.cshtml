@@ -2,7 +2,26 @@
 
 @model List<FormIndexViewModel>
 
-@foreach (FormIndexViewModel form in Model)
-{
-    
-}    
+<h2>Form List</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>CreatorName</th>
+            <th>Label</th>
+            <th>FormTypeId</th>
+            <th>StatusId</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var form in Model)
+        {
+            <tr>
+                <td>@form.CreatorName</td>
+                <td>@form.Label</td>
+                <td>@form.FormTypeId</td>
+                <td>@form.StatusId</td>
+            </tr>
+        }
+    </tbody>
+</table>

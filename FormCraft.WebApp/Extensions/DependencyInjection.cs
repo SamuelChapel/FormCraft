@@ -13,11 +13,11 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddWebApp(this IServiceCollection services)
     {
-        //services.AddAutoMapper(conf =>
-        //{
-        //    conf.CreateMap<FormResponse, FormIndexViewModel>();
-                      
-        //});
+        services.AddAutoMapper(conf =>
+        {
+            conf.CreateMap<FormResponse, FormIndexViewModel>();
+            conf.CreateMap<FormWithQuestionsResponse, FormDetailsViewModel>();
+        });
 
         return services;
     }

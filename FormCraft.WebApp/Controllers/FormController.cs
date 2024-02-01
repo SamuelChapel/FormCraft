@@ -20,10 +20,10 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
 
     [HttpGet]
     [ProducesResponseType(200)]
-    public async Task<ActionResult<List<FormResponse>>> Index()
+    public async Task<ActionResult<List<FormIndexViewModel>>> Index()
     {
         var formsResponse = await _formBusiness.GetAll();
-        var formsVm = _mapper.Map<FormIndexViewModel>(formsResponse);
+        var formsVm = _mapper.Map<List<FormIndexViewModel>>(formsResponse);
 
         return View(formsVm);
     }
@@ -72,7 +72,7 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
         try
         {
             var reponse = await _formBusiness.GetById(id);
-            var formVm = _mapper.Map<FormDetailsViewModel>(reponse);
+            var formVm = _mapper.Map<FormDetailsViewModel>(reponse); //config mapper
 
             return View(formVm);
         }
