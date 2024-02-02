@@ -43,29 +43,21 @@ namespace FormCraft.Repositories.Database.Repositories
             return entity;
         }
 
-        public async Task<List<Form>> Search(bool[]? type, bool[] status, string? label, int order, string? currentUserId)
+        public async Task<List<Form>> Search(string[]? type, string[]? status, string? label, int? order, string? currentUserId)
         {
             var result = _context.Forms.Where(f =>
-            EF.Functions.Like(f.Label, $"%{label}%"));
-
-            bool[] statusChecked;
-
-            for (int i = 0; i < status.Length; i++)
-            {
-                if (status[i])
-                {
-                    statusChecked.Append(status[i]);    
-                }
-            }
+                EF.Functions.Like(f.Label, $"%{label}%") &&
+                (type == null || type.Any(t => f.FormType!.Label == t)) &&
+                (status == null || status.Any(s => f.Status!.Label == s)));
 
             return order switch
             {
-                1 => [.. result.OrderBy(f => f.StatusId)],
-                2 => [.. result.OrderBy(f => f.FormTypeId)],
-                3 => [.. result.OrderBy(f => f.Label)],
-                4 => [.. result.OrderByDescending(f => f.Label)],
-                5 => [.. result.OrderBy(f => f.CreatedAt)],
-                6 => [.. result.OrderByDescending(f => f.CreatedAt)],
+                1 => await result.OrderBy(f => f.StatusId).ToListAsync(),
+                2 => await result.OrderBy(f => f.FormTypeId).ToListAsync(),
+                3 => await result.OrderBy(f => f.Label).ToListAsync(),
+                4 => await result.OrderByDescending(f => f.Label).ToListAsync(),
+                5 => await result.OrderBy(f => f.CreatedAt).ToListAsync(),
+                6 => await result.OrderByDescending(f => f.CreatedAt).ToListAsync(),
                 _ => await result.ToListAsync()
             };
         }

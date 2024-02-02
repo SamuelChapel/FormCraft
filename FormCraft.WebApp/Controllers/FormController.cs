@@ -21,7 +21,7 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
 
     [HttpGet]
     [ProducesResponseType(200)]
-    public async Task<ActionResult<List<FormResponseViewModel>>> List()
+public async Task<ActionResult<List<FormResponseViewModel>>> List()
     {
         await Console.Out.WriteLineAsync("Action called");
 
@@ -76,8 +76,7 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
 
     [HttpPost("Search")]
     [ProducesResponseType(200)]
-
-    public async Task<ActionResult<List<ViewComponentResult>>> Search([FromBody] SearchFormRequest request)
+    public async Task<ActionResult<List<FormResponseViewModel>>> Search([FromBody] SearchFormRequest request)
     {
         var Id = (await _userManager.GetUserAsync(HttpContext.User))?.Id;
         request.CurrentUserId = Id;

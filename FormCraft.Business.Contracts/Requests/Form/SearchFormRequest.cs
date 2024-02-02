@@ -5,10 +5,10 @@ namespace FormCraft.Business.Contracts.Requests.Form
 {
     public class SearchFormRequest() : IRequest
     {
-        public string? Label = null;
-        public string? CurrentUserId = null;
-        public bool[] IsStatusEnumPicked = [];
-        public bool[] IsFormTypePicked = [];
-        public int? Order = null;
+        public string? Label { get; set; } = null;
+        public string? CurrentUserId { get; set; } = null;
+        public string[] IsStatusEnumPicked { get; set; } = [];
+        public string[] IsFormTypePicked { get; set; } = [];
+        public int? Order { get; set; } = null;
     }
 }

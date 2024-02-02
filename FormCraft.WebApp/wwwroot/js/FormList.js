@@ -18,37 +18,53 @@ $(function () {
         e.preventDefault();
     });
 
-    $("#searchBtn").on("click", e => {
+    $("#searchBtn").on('click', e => {
 
-        console.log("enter test");
-
-        let formList = $("#search-form-form");
-        console.log("form list : ", formList);
+        //let formList = $("#search-form-form");
 
         let label = $('#labelInput').val();
         let userId = "";
         let order = $('#orderInput').val();
-        let isTypeSurveyChecked = $('#formTypeInput-Survey').is(":checked");
-        let isTypeCommentChecked = $('#formTypeInput-Comment').is(":checked");
-        let isTypeEvaluationChecked = $('#formTypeInput-Evaluation').is(":checked");
+
+        //let isTypeSurveyChecked = $('#formTypeInput-Survey').is(":checked");
+        //let isTypeCommentChecked = $('#formTypeInput-Comment').is(":checked");
+        //let isTypeEvaluationChecked = $('#formTypeInput-Evaluation').is(":checked");
 
         let isInProgressChecked = $('#statusInput-InProgress').is(":checked");
         let isValidatedChecked = $('#statusInput-Validated').is(":checked");
         let isClosedChecked = $('#statusInput-Closed').is(":checked");
 
-        let formRequest = { Label: label, CurrentUserId: userId, IsStatusEnumPicked: [isInProgressChecked, isValidatedChecked, isClosedChecked], IsFormTypePicked: [isTypeSurveyChecked, isTypeCommentChecked, isTypeEvaluationChecked], Order: order };
+        let formTypeValues = $('input[name="IsFormTypePicked"]:checked').map(function () {
+            return $(this).val();
+        }).get();
+
+        let statusValues = $('input[name="IsStatusEnumPicked"]:checked').map(function () {
+            return $(this).val();
+        }).get();
+
+        //let formRequest = {
+        //    Label: label,
+        //    CurrentUserId: userId,
+        //    IsStatusEnumPicked: [isInProgressChecked, isValidatedChecked, isClosedChecked],
+        //    IsFormTypePicked: [isTypeSurveyChecked, isTypeCommentChecked, isTypeEvaluationChecked],
+        //    Order: order
+        //};
+
+        let formRequest = {
+            Label: label,
+            CurrentUserId: userId,
+            IsStatusEnumPicked: statusValues,
+            IsFormTypePicked: formTypeValues,
+            Order: order
+        };
+
         console.log("request test", formRequest);
 
-        $.post("/Form/Search", { request: formRequest },
-            function (data) {
-                $('#list-container').empty();
-                $('#list-container').html(data);
-            }
-        )
-            .fail(function (error) {
-                alert('Une erreur s\'est produite.');
-                console.error(error);
-            });
+        $.post("/Form/Search", formRequest, data => {
+            $('#list-container').empty();
+            $('#list-container').html(data);
+        }
+        );
         e.preventDefault();
     });
 });
