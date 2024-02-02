@@ -1,0 +1,22 @@
+﻿@using FormCraft.WebApp.ViewModels.FormViewModels
+
+@model List<FormResponseViewModel>
+
+@foreach (var item in Model)
+{
+    <tr id="row-@item.Id">
+        <td>@item.CreatorName</td>
+        <td>@item.Label</td>
+        <td>@item.FormTypeId</td>
+        <td>@item.StatusId</td>
+        <td>
+            <a asp-controller="Form" asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-success"> Go to</a>
+        </td>
+        <td>
+            @if (item.StatusId == StatusEnum.InProgress)
+            {
+                <a class="btn btn-outline-danger delete" data-Model-id="@item.Id"> Delete</a>
+            }
+        </td>
+    </tr>
+}

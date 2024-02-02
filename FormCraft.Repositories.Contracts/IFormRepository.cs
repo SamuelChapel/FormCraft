@@ -10,6 +10,6 @@ namespace FormCraft.Repositories.Contracts
         /// </summary>
         /// <param name="search"></param>
         /// <returns>returns the <typeparamref name="TEntity"/> if it's found</returns>
-        Task<List<Form>> Search(FormTypeEnum? type, StatusEnum? status, string? label, int? order, string? currentUserId);
+        Task<List<Form>> Search(bool[]? type, bool[]? status, string? label, int? order, string? currentUserId);
     }
 }

@@ -75,13 +75,11 @@ namespace FormCraft.Business.Services
             return _mapper.Map<FormResponse>(form);
         }
 
-        public async Task<List<SearchFormResponse>> Search(SearchFormRequest searchRequest)
+        public async Task<List<FormResponse>> Search(SearchFormRequest searchRequest)
         {
-            _mapper.Map<Form>(searchRequest);
+            var forms = await _formRepository.Search(searchRequest.IsStatusEnumPicked, searchRequest.IsFormTypePicked, searchRequest.Label, searchRequest.Order, searchRequest.CurrentUserId);
 
-            var forms = await _formRepository.Search(searchRequest.FormTypeId, searchRequest.StatusId, searchRequest.Label, searchRequest.Order, searchRequest.CurrentUserId);
-
-            return _mapper.Map<List<SearchFormResponse>>(forms);
+            return _mapper.Map<List<FormResponse>>(forms);
         }
     }
 }

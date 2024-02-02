@@ -3,10 +3,12 @@ using FormCraft.Entities;
 
 namespace FormCraft.Business.Contracts.Requests.Form
 {
-    public record SearchFormRequest(
-        string? Label = null,
-        string? CurrentUserId = null,
-        StatusEnum? StatusId = null,
-        FormTypeEnum? FormTypeId = null,
-        int? Order = null) : IRequest;
+    public class SearchFormRequest() : IRequest
+    {
+        public string? Label = null;
+        public string? CurrentUserId = null;
+        public bool[] IsStatusEnumPicked = [];
+        public bool[] IsFormTypePicked = [];
+        public int? Order = null;
+    }
 }

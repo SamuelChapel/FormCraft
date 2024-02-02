@@ -7,6 +7,7 @@ using FormCraft.Entities;
 using FormCraft.WebApp.Models;
 using FormCraft.WebApp.ViewModels;
 using FormCraft.WebApp.ViewModels.FormViewModels;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,14 +21,14 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
 
     [HttpGet]
     [ProducesResponseType(200)]
-    public async Task<ActionResult<List<FormIndexViewModel>>> List()
+    public async Task<ActionResult<List<FormResponseViewModel>>> List()
     {
         await Console.Out.WriteLineAsync("Action called");
 
         List<FormResponse>? formsResponse = await _formBusiness.GetAll();
-        var formsVm = _mapper.Map<List<FormIndexViewModel>>(formsResponse);
+        var formsVm = _mapper.Map<List<FormResponseViewModel>>(formsResponse);
 
-        return View("Index",formsVm);
+        return View("Index", formsVm);
     }
 
     [HttpGet]
@@ -75,23 +76,17 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
 
     [HttpPost("Search")]
     [ProducesResponseType(200)]
-    public async Task<ActionResult<List<SearchFormResponse>>> Search(SearchFormRequest request)
+
+    public async Task<ActionResult<List<ViewComponentResult>>> Search([FromBody] SearchFormRequest request)
     {
         var Id = (await _userManager.GetUserAsync(HttpContext.User))?.Id;
-        request = request with { CurrentUserId = Id };
+        request.CurrentUserId = Id;
 
         var searchResult = await _formBusiness.Search(request);
-        var formsVm = _mapper.Map<FormSearchViewModel>(searchResult);
 
+        var resultList = _mapper.Map<List<FormResponseViewModel>>(searchResult);
 
-        if (searchResult.Count > 1)
-            return RedirectToAction(nameof(Index), formsVm);
-
-        else if (searchResult.Count == 1)
-            return RedirectToAction(nameof(Details), formsVm);
-
-        else
-            return NotFound();
+        return ViewComponent("FormRows", resultList);
     }
 
     [HttpPut]
@@ -125,6 +120,7 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
             await _formBusiness.Delete(request);
             //return RedirectToAction(nameof(List));
             return NoContent();
+            ;
         }
         catch (NotFoundException e)
         {

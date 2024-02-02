@@ -43,23 +43,30 @@ namespace FormCraft.Repositories.Database.Repositories
             return entity;
         }
 
-        public async Task<List<Form>> Search(FormTypeEnum? type, StatusEnum? status, string? label, int? order, string? currentUserId)
+        public async Task<List<Form>> Search(bool[]? type, bool[] status, string? label, int order, string? currentUserId)
         {
-            var result = await _context.Forms.Where(f =>
-            EF.Functions.Like(f.Label, $"%{label}%") ||
-            (f.FormTypeId == type) ||
-            (f.StatusId == status) ||
-            (f.CreatorId == currentUserId)
-            ).ToListAsync();
+            var result = _context.Forms.Where(f =>
+            EF.Functions.Like(f.Label, $"%{label}%"));
+
+            bool[] statusChecked;
+
+            for (int i = 0; i < status.Length; i++)
+            {
+                if (status[i])
+                {
+                    statusChecked.Append(status[i]);    
+                }
+            }
 
             return order switch
             {
                 1 => [.. result.OrderBy(f => f.StatusId)],
                 2 => [.. result.OrderBy(f => f.FormTypeId)],
                 3 => [.. result.OrderBy(f => f.Label)],
-                4 => [.. result.OrderBy(f => f.CreatedAt)],
-                5 => [.. result.OrderByDescending(f => f.CreatedAt)],
-                _ => result
+                4 => [.. result.OrderByDescending(f => f.Label)],
+                5 => [.. result.OrderBy(f => f.CreatedAt)],
+                6 => [.. result.OrderByDescending(f => f.CreatedAt)],
+                _ => await result.ToListAsync()
             };
         }
     }

@@ -15,8 +15,9 @@ public static class DependencyInjection
     {
         services.AddAutoMapper(conf =>
         {
-            conf.CreateMap<FormResponse, FormIndexViewModel>();
+            conf.CreateMap<FormResponse, FormResponseViewModel>();
             conf.CreateMap<FormWithQuestionsResponse, FormDetailsViewModel>();
+            conf.CreateMap<SearchFormResponse, FormResponseViewModel>();
         });
 
         return services;
