@@ -13,5 +13,10 @@ public class QuestionConfigurations : IEntityTypeConfiguration<Question>
             .HasForeignKey(q => q.FormId)
             .OnDelete(DeleteBehavior.NoAction)
             .IsRequired();
+
+        builder.HasMany(q => q.Answers)
+            .WithOne(a => a.Question)
+            .HasForeignKey(a => a.QuestionId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
