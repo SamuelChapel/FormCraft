@@ -30,12 +30,11 @@ namespace FormCraft.Business.Services
 
         public async Task Delete(DeleteAnswerRequest request)
         {
-            var answerToDelete = await GetById(request.Id);
-            var answer = _mapper.Map<Answer>(answerToDelete);
+            var answerToDelete = await _answerRepository.GetById(request.Id);
 
             if (answerToDelete is not null)
             {
-                await _answerRepository.Delete(answer);
+                await _answerRepository.Delete(answerToDelete);
             }
         }
 

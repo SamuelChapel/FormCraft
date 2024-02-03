@@ -1,0 +1,10 @@
+﻿@model AnswerResponse
+
+<div class="create-answer">
+    <input id="question-title" type="text" class="form-control" required>
+    <button class="btn btn-outline-danger"
+            data-id="@Model.Id"
+            onclick="RemoveAnswer(this)">
+        Remove Answer
+    </button>
+</div>

@@ -1,72 +1,57 @@
 ﻿using FormCraft.Business.Contracts;
 using FormCraft.Business.Contracts.Requests.Answer;
-using FormCraft.Business.Contracts.Responses.Answer;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FormCraft.WebApp.Controllers
+namespace FormCraft.WebApp.Controllers;
+
+public class AnswerController : Controller
 {
-    public class AnswerController : Controller
+    private readonly IAnswerBusiness _answerBusiness;
+
+    public AnswerController(IAnswerBusiness answerBusiness)
     {
-        private readonly IAnswerBusiness _answerBusiness;
+        _answerBusiness = answerBusiness;
+    }
 
-        public AnswerController(IAnswerBusiness answerBusiness)
+    public async Task<ActionResult> Details(string id)
+    {
+        return View(await _answerBusiness.GetById(id));
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> Create(CreateAnswerRequest request)
+    {
+        var answer = await _answerBusiness.Create(request);
+
+        var answerViewComponent = ViewComponent("CreateAnswer", answer);
+
+        return answerViewComponent;
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> Update(UpdateAnswerRequest request)
+    {
+        try
         {
-            _answerBusiness = answerBusiness;
+            return Json(await _answerBusiness.Update(request));
         }
-
-        // GET: AnswerController/Details/5
-        public async Task<ActionResult> Details(string id)
+        catch
         {
-            return View(await _answerBusiness.GetById(id));
-
-           
+            return View();
         }
+    }
 
-        // POST: AnswerController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(CreateAnswerRequest request)
+    [HttpPost]
+    public async Task<ActionResult> Delete(string Id)
+    {
+        try
         {
-            try
-            {
-                return Json(await _answerBusiness.Create(request));
-            }
-            catch
-            {
-                return View();
-            }
+            await _answerBusiness.Delete(new DeleteAnswerRequest(Id));
+            return Ok();
         }
-
-        // POST: AnswerController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Update(UpdateAnswerRequest request)
+        catch
         {
-            try
-            {
-                return Json(await _answerBusiness.Update(request));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // POST: AnswerController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(string Id)
-        {
-            try
-            {
-
-                await _answerBusiness.Delete(new DeleteAnswerRequest(Id));
-                return View();
-            }
-            catch
-            {
-                return View();
-            }
+            return BadRequest();
         }
     }
 }

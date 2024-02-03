@@ -50,10 +50,10 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
         {
             CreateFormModel = new CreateFormModel()
             {
-                Id = form.Id,
+                Id = "55975614-e80d-4698-bc94-b4224136ac63",
                 CreatorId = user!.Id,
-                FormTypeId = form.FormTypeId,
-                Label = form.Label,
+                FormTypeId = FormTypeEnum.Survey,
+                Label = "Form Title",
                 StatusId = StatusEnum.InProgress
             },
             Questions = []
@@ -92,7 +92,6 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
     {
         List<string> list = [];
 
-        //var currentUser = await _userManager.GetUserAsync(HttpContext.User);
         var IsAuthenticated = HttpContext.User.Identity!.IsAuthenticated;
 
         if (!IsAuthenticated)
@@ -150,7 +149,6 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
         try
         {
             await _formBusiness.Delete(request);
-            //return RedirectToAction(nameof(List));
             return NoContent();
             ;
         }

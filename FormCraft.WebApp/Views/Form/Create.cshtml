@@ -1,5 +1,10 @@
 ﻿@model FormViewModel
 
+@section scripts
+{
+    <script src="~/js/CreateForm.js" asp-append-version="true"></script>
+}
+
 <form id="create-form" asp-action="Create" asp-controller="Form">
 
     <div class="create-form-container">
@@ -14,59 +19,23 @@
                     <option value="@formType">@formType</option>
                 }
             </select>
-    </div>
+        </div>
 
         <hr class="hr hr-blurry" />
 
-        <div class="question-list-container">
+        <div id="question-list-container">
             @foreach (QuestionDetailsViewModel question in Model.Questions)
             {
 
             }
-    </div>
+        </div>
 
-        <button id="add-question-button" type="button" class="btn btn-primary">Add question</button>
+        <button id="add-question-button"
+                type="button"
+                class="btn btn-outline-primary"
+                data-form-id="@Model.CreateFormModel.Id">
+            Add question
+        </button>
 
     </div>
 </form>
-
-@section scripts
-{
-    <script>
-        $(function () {
-            $('#create-form').submit(e => {
-                console.log(e.target.formTitle.value, e.target.formType.value);
-
-                $.post('/Form/Create', {
-                    label: e.target.formTitle.value,
-                    formType: e.target.formType.value
-                },
-                    (formResponse) => {
-                        console.log(formResponse);
-                    }
-                );
-                e.preventDefault();
-            });
-        });
-
-        $(function () {
-            $('#add-question-button').on('click', e => {
-                console.log(e.target);
-
-                $.post('/Question/Create', {
-                    Number: $('#question-list-container').length + 1,
-                    Label: 'Question Title',
-                    QuestionTypeId: 1,
-                    FormId: '@Model.CreateFormModel.Id'
-                                                },
-                    (questionResponse) => {
-                        console.log(questionResponse);
-                        $('question-list-container').append(questionResponse);
-                    }
-                );
-
-                e.preventDefault();
-            });
-        });
-    </script>
-}

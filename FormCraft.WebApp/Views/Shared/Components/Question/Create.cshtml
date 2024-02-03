@@ -1,6 +1,6 @@
 ﻿@model QuestionResponse
 
-<div class="create-question">
+<div class="create-question card">
     <div class="create-question-title-container">
         <input id="question-title" asp-for="Label" type="text" class="form-control" required>
 
@@ -20,7 +20,7 @@
         </button>
     </div>
 
-    <div class="@Model.Number-question-answers">
+    <div id="@Model.Number-question-answers">
 
     </div>
 
