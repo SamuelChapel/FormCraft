@@ -1,14 +1,35 @@
-﻿@model CreateQuestionModel
+﻿@model QuestionResponse
 
 <div class="create-question">
     <div class="create-question-title-container">
-        <input id="question-title" asp-for="Id" type="text" class="form-control" required>
+        <input id="question-title" asp-for="Label" type="text" class="form-control" required>
 
-        <select class="form-select" aria-label="Default select example">
+        <select class="form-select" name="question-type">
             @foreach (QuestionTypeEnum questionType in Enum.GetValues<QuestionTypeEnum>())
             {
                 <option value=@questionType>@questionType</option>
             }
         </select>
+
+        <button id="remove-question-button"
+                type="button"
+                class="btn btn-outline-danger"
+                data-id="@Model.Id"
+                onclick="RemoveQuestion(this);">
+            Remove Question
+        </button>
     </div>
+
+    <div class="@Model.Number-question-answers">
+
+    </div>
+
+    <button id="add-answer-button"
+            type="button"
+            class="btn btn-outline-primary"
+            data-question-id="@Model.Id"
+            data-question-number="@Model.Number"
+            onclick="AddAnswer(this)">
+        Add answer
+    </button>
 </div>
