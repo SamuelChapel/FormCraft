@@ -36,19 +36,14 @@ public class QuestionService : IQuestionService
 
     public async Task Delete(DeleteQuestionRequest request)
     {
-        var questionToDelete = await GetById(request.Id);
+        var question = await _questionRepository.GetById(request.Id) ?? throw new NotFoundException("Question not found");
 
-        var form = await _formBusiness.GetById(questionToDelete.FormId);
+        var form = await _formBusiness.GetById(question.FormId);
 
         if (form.StatusId != StatusEnum.InProgress)
             throw new BadRequestException("From status not available");
 
-        if (questionToDelete is not null)
-        {
-            var question = _mapper.Map<Question>(questionToDelete);
-            await _questionRepository.Delete(question);
-        }
-        throw new NotFoundException("Question not found");
+        await _questionRepository.Delete(question);
     }
 
     public async Task<List<QuestionResponse>> GetAll()
@@ -60,6 +55,7 @@ public class QuestionService : IQuestionService
         {
             return _mapper.Map<QuestionResponse>(q);
         }
+
         throw new NotFoundException("Question not found");
     }
 

@@ -21,7 +21,7 @@ namespace FormCraft.Business.Services
 
             form.StatusId = StatusEnum.InProgress;
 
-            await _formRepository.Create(form);
+            form = await _formRepository.Create(form);
 
             var formResponse = _mapper.Map<FormResponse>(form);
 
