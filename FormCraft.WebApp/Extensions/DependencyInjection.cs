@@ -1,10 +1,5 @@
-﻿using FormCraft.Business.Contracts.Requests.Answer;
-using FormCraft.Business.Contracts.Requests.Form;
-using FormCraft.Business.Contracts.Requests.Question;
-using FormCraft.Business.Contracts.Responses.Answer;
-using FormCraft.Business.Contracts.Responses.Form;
-using FormCraft.Business.Contracts.Responses.Question;
-using FormCraft.Entities;
+﻿using FormCraft.Business.Contracts.Responses.Form;
+using FormCraft.WebApp.Models;
 using FormCraft.WebApp.ViewModels.FormViewModels;
 
 namespace FormCraft.WebApp.Extensions;
@@ -15,6 +10,7 @@ public static class DependencyInjection
     {
         services.AddAutoMapper(conf =>
         {
+            conf.CreateMap<FormResponse, CreateFormModel>();
             conf.CreateMap<FormResponse, FormResponseViewModel>();
             conf.CreateMap<FormWithQuestionsResponse, FormDetailsViewModel>();
             conf.CreateMap<SearchFormResponse, FormResponseViewModel>();

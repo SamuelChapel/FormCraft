@@ -33,12 +33,12 @@ namespace FormCraft.Business.Services
 
         public async Task Delete(DeleteFormRequest request)
         {
-            var formToDelete = await GetById(request.Id);
+            var formToDelete = await _formRepository.GetById(request.Id) ?? throw new NotFoundException("Form not found");
 
             if (formToDelete.StatusId != StatusEnum.InProgress)
                 throw new Exception("Form status not available");
 
-            await _formRepository.Delete(_mapper.Map<Form>(formToDelete));
+            await _formRepository.Delete(formToDelete);
         }
 
         public async Task<List<FormResponse>> GetAll()

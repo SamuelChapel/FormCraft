@@ -17,6 +17,7 @@ public static class DependencyInjection
     {
         services.AddAutoMapper(conf =>
         {
+            conf.CreateMap<CreateAnswerRequest, Answer>();
             conf.CreateMap<Answer, AnswerResponse>();
 
             conf.CreateMap<Question, QuestionResponse>().ReverseMap();
@@ -24,20 +25,17 @@ public static class DependencyInjection
             conf.CreateMap<CreateQuestionRequest, Question>();
             conf.CreateMap<UpdateQuestionRequest, Question>();
 
+            conf.CreateMap<CreateFormRequest, Form>();
             conf.CreateMap<Form, FormResponse>()
                 .ForMember(dest => dest.CreatorName, opt => opt.MapFrom(src => src.Creator!.UserName));
-
             conf.CreateMap<FormWithQuestionsResponse, Form>().ReverseMap();
-
             conf.CreateMap<Form, SearchFormResponse>();
 
         });
+
         services.AddTransient<IAnswerBusiness, AnswerBusiness>();
         services.AddTransient<IQuestionService, QuestionService>();
         services.AddTransient<IFormBusiness, FormBusiness>();
-
-
-
 
         return services;
     }

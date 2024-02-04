@@ -40,6 +40,9 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
     [HttpGet]
     public async Task<IActionResult> Create()
     {
+        if (!HttpContext.User.Identity!.IsAuthenticated)
+            return View(nameof(Index));
+
         var user = await _userManager.GetUserAsync(HttpContext.User);
 
         var request = new CreateFormRequest("Form Title", FormTypeEnum.Survey, user!.Id);
@@ -48,14 +51,7 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
 
         var formViewModel = new FormViewModel()
         {
-            CreateFormModel = new CreateFormModel()
-            {
-                Id = "55975614-e80d-4698-bc94-b4224136ac63",
-                CreatorId = user!.Id,
-                FormTypeId = FormTypeEnum.Survey,
-                Label = "Form Title",
-                StatusId = StatusEnum.InProgress
-            },
+            CreateFormModel = _mapper.Map<CreateFormModel>(form),
             Questions = []
         };
 
