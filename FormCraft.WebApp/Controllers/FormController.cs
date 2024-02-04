@@ -7,7 +7,6 @@ using FormCraft.Entities;
 using FormCraft.WebApp.Models;
 using FormCraft.WebApp.ViewModels;
 using FormCraft.WebApp.ViewModels.FormViewModels;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,7 +20,7 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
 
     [HttpGet]
     [ProducesResponseType(200)]
-public async Task<ActionResult<List<FormResponseViewModel>>> List()
+    public async Task<ActionResult<List<FormResponseViewModel>>> List()
     {
         await Console.Out.WriteLineAsync("Action called");
 
@@ -74,12 +73,41 @@ public async Task<ActionResult<List<FormResponseViewModel>>> List()
         }
     }
 
-    [HttpPost("Search")]
+    //[httppost("search")]
+    //[producesresponsetype(200)]
+    //public async task<actionresult<list<formresponseviewmodel>>> search(searchformrequest request)
+    //{
+    //    var id = (await _usermanager.getuserasync(httpcontext.user))?.id;
+    //    request.currentuserid = id;
+
+    //    var searchresult = await _formbusiness.search(request);
+
+    //    var resultlist = _mapper.map<list<formresponseviewmodel>>(searchresult);
+
+    //    return viewcomponent("formrows", resultlist);
+    //}
+
+    [HttpPost]
     [ProducesResponseType(200)]
-    public async Task<ActionResult<List<FormResponseViewModel>>> Search([FromBody] SearchFormRequest request)
+    public async Task<ActionResult<List<FormResponseViewModel>>> Search(
+        string? Label,
+        string? CurrentUserId,
+        string[] IsStatusEnumPIcked,
+        string[] IsFormTypePicked,
+        int? Order
+        )
     {
         var Id = (await _userManager.GetUserAsync(HttpContext.User))?.Id;
-        request.CurrentUserId = Id;
+        CurrentUserId = Id;
+
+        var request = new SearchFormRequest()
+        {
+            CurrentUserId = CurrentUserId,
+            IsFormTypePicked = IsFormTypePicked,
+            Order = Order,
+            IsStatusEnumPicked = IsStatusEnumPIcked,
+            Label = Label
+        };
 
         var searchResult = await _formBusiness.Search(request);
 

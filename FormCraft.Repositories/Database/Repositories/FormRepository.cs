@@ -2,7 +2,6 @@
 using FormCraft.Repositories.Contracts;
 using FormCraft.Repositories.Database.Contexts;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FormCraft.Repositories.Database.Repositories
 {
@@ -43,12 +42,30 @@ namespace FormCraft.Repositories.Database.Repositories
             return entity;
         }
 
-        public async Task<List<Form>> Search(string[]? type, string[]? status, string? label, int? order, string? currentUserId)
+        public async Task<List<Form>> Search(string[] status, string[] type, string? label, int? order, string? currentUserId)
         {
-            var result = _context.Forms.Where(f =>
-                EF.Functions.Like(f.Label, $"%{label}%") &&
-                (type == null || type.Any(t => f.FormType!.Label == t)) &&
-                (status == null || status.Any(s => f.Status!.Label == s)));
+            var result = _context.Forms
+                .Include(f => f.FormType)
+                .Include(f => f.Status)
+                .Include(f => f.Creator)
+                .AsQueryable();
+
+            if (label is not null)
+            {
+                result = result.Where(f =>
+                f.Label.Contains(label, StringComparison.InvariantCultureIgnoreCase) ||
+                f.Creator!.UserName!.Contains(label, StringComparison.InvariantCultureIgnoreCase));
+            }
+
+            if (type.Length != 0)
+            {
+                result = result.Where(f => type.Any(t => f.FormType!.Label == t));
+            }
+
+            if (status.Length != 0)
+            {
+                result = result.Where(f => status.Any(t => f.Status!.Label == t));
+            }
 
             return order switch
             {

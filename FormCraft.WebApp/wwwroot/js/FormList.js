@@ -52,7 +52,7 @@ $(function () {
 
         console.log("request test", request);
 
-        $.post("/Form/Search", request = request, data => {
+        $.post("/Form/Search", request, data => {
 
             console.log("enter method");
 
