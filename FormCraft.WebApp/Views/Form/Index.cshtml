@@ -30,7 +30,6 @@
         <div class="d-flex gap-2 form-control justify-content-center check-box-container">
             @foreach (FormTypeEnum formType in Enum.GetValues<FormTypeEnum>())
             {
-
                 <div class="form-check">
                     <div class="item">
                         <input class="form-check-input" type="checkbox" name="IsFormTypePicked" value="@formType" data-type="@formType" id="formTypeInput-@formType">
@@ -43,14 +42,19 @@
         </div>
 
         <div class="d-flex gap-2 form-control justify-content-center check-box-container">
+
+
             @foreach (StatusEnum formStatus in Enum.GetValues<StatusEnum>())
             {
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="IsStatusEnumPicked" value="@formStatus" data-status="@formStatus" id="statusInput-@formStatus">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        @formStatus
-                    </label>
-                </div>
+                if (User.Identity.IsAuthenticated || !User.Identity.IsAuthenticated && formStatus != StatusEnum.InProgress)
+                {
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="IsStatusEnumPicked" value="@formStatus" data-status="@formStatus" id="statusInput-@formStatus">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            @formStatus
+                        </label>
+                    </div>
+                }
             }
         </div>
 
@@ -69,44 +73,7 @@
         </tr>
     </thead>
     <tbody id="list-container">
-        @foreach (var form in Model)
-        {
-            <tr id="row-@form.Id">
-                <td>@form.CreatorName</td>
-                <td>@form.Label</td>
-                <td>@form.FormTypeId</td>
-                <td>
-                    @if (form.StatusId == StatusEnum.InProgress)
-                    {
-                        <div class="d-flex justify-content-center bg-warning text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">
-                            @form.StatusId
-                        </div>
-                    }
-                    @if (form.StatusId == StatusEnum.Validated)
-                    {
-                        <div class="d-flex justify-content-center bg-success text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">
-                            @form.StatusId
-                        </div>
-                    }
-
-                    @if (form.StatusId == StatusEnum.Closed)
-                    {
-                        <div class="d-flex justify-content-center bg-black bg-opacity-50 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">
-                            @form.StatusId
-                        </div>
-                    }
-                </td>
-                <td>
-                    <a asp-controller="Form" asp-action="Details" asp-route-id="@form.Id" class="btn btn-outline-success"> Go to</a>
-                </td>
-                <td>
-                    @if (form.StatusId == StatusEnum.InProgress)
-                    {
-                        <a class="btn btn-danger delete" data-form-id="@form.Id">Delete</a>
-                    }
-                </td>
-            </tr>
-        }
+        <vc:form-rows forms="@Model"></vc:form-rows>
     </tbody>
 </table>
 

@@ -2,20 +2,40 @@
 
 @model List<FormResponseViewModel>
 
-@foreach (var item in Model)
+@foreach (var form in Model)
 {
-    <tr id="row-@item.Id">
-        <td>@item.CreatorName</td>
-        <td>@item.Label</td>
-        <td>@item.FormTypeId</td>
-        <td>@item.StatusId</td>
+    <tr id="row-@form.Id">
+        <td>@form.CreatorName</td>
+        <td>@form.Label</td>
+        <td>@form.FormTypeId</td>
         <td>
-            <a asp-controller="Form" asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-success"> Go to</a>
+            @if (form.StatusId == StatusEnum.InProgress)
+            {
+                <div class="d-flex justify-content-center bg-warning text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">
+                    @form.StatusId
+                </div>
+            }
+            @if (form.StatusId == StatusEnum.Validated)
+            {
+                <div class="d-flex justify-content-center bg-success text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">
+                    @form.StatusId
+                </div>
+            }
+
+            @if (form.StatusId == StatusEnum.Closed)
+            {
+                <div class="d-flex justify-content-center bg-black bg-opacity-50 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">
+                    @form.StatusId
+                </div>
+            }
         </td>
         <td>
-            @if (item.StatusId == StatusEnum.InProgress)
+            <a asp-controller="Form" asp-action="Details" asp-route-id="@form.Id" class="btn btn-outline-success"> Go to</a>
+        </td>
+        <td>
+            @if (form.StatusId == StatusEnum.InProgress)
             {
-                <a class="btn btn-outline-danger delete" data-Model-id="@item.Id"> Delete</a>
+                <a class="btn btn-danger delete" data-form-id="@form.Id">Delete</a>
             }
         </td>
     </tr>

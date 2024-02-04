@@ -12,19 +12,26 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FormCraft.WebApp.Controllers;
 
-public class FormController(IFormBusiness formBusiness, UserManager<AppUser> userManager, IMapper mapper) : Controller
+public class FormController(IFormBusiness formBusiness, UserManager<AppUser> userManager, IMapper mapper, SignInManager<AppUser> signInManager) : Controller
 {
     private readonly IFormBusiness _formBusiness = formBusiness;
     private readonly UserManager<AppUser> _userManager = userManager;
     private readonly IMapper _mapper = mapper;
+    private readonly SignInManager<AppUser> _signInManager = signInManager;
 
     [HttpGet]
     [ProducesResponseType(200)]
     public async Task<ActionResult<List<FormResponseViewModel>>> List()
     {
-        await Console.Out.WriteLineAsync("Action called");
-
         List<FormResponse>? formsResponse = await _formBusiness.GetAll();
+
+        var IsAuthenticated = HttpContext.User.Identity!.IsAuthenticated;
+
+        if (!IsAuthenticated)
+        {
+            formsResponse = formsResponse.Where(f => f.StatusId != StatusEnum.InProgress).ToList();
+        }
+
         var formsVm = _mapper.Map<List<FormResponseViewModel>>(formsResponse);
 
         return View("Index", formsVm);
@@ -73,20 +80,6 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
         }
     }
 
-    //[httppost("search")]
-    //[producesresponsetype(200)]
-    //public async task<actionresult<list<formresponseviewmodel>>> search(searchformrequest request)
-    //{
-    //    var id = (await _usermanager.getuserasync(httpcontext.user))?.id;
-    //    request.currentuserid = id;
-
-    //    var searchresult = await _formbusiness.search(request);
-
-    //    var resultlist = _mapper.map<list<formresponseviewmodel>>(searchresult);
-
-    //    return viewcomponent("formrows", resultlist);
-    //}
-
     [HttpPost]
     [ProducesResponseType(200)]
     public async Task<ActionResult<List<FormResponseViewModel>>> Search(
@@ -97,6 +90,18 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
         int? Order
         )
     {
+        List<string> list = [];
+
+        //var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+        var IsAuthenticated = HttpContext.User.Identity!.IsAuthenticated;
+
+        if (!IsAuthenticated)
+        {
+            var itemToDelete = IsStatusEnumPIcked.FirstOrDefault(s => s == StatusEnum.InProgress.ToString());
+            list = IsStatusEnumPIcked.ToList();
+            list.Remove(itemToDelete!);
+        }
+
         var Id = (await _userManager.GetUserAsync(HttpContext.User))?.Id;
         CurrentUserId = Id;
 
@@ -105,7 +110,7 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
             CurrentUserId = CurrentUserId,
             IsFormTypePicked = IsFormTypePicked,
             Order = Order,
-            IsStatusEnumPicked = IsStatusEnumPIcked,
+            IsStatusEnumPicked = list.ToArray(),
             Label = Label
         };
 
