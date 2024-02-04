@@ -11,7 +11,7 @@ public class QuestionConfigurations : IEntityTypeConfiguration<Question>
         builder.HasOne(q => q.Form)
             .WithMany(f => f.Questions)
             .HasForeignKey(q => q.FormId)
-            .OnDelete(DeleteBehavior.NoAction)
+            .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
         builder.HasMany(q => q.Answers)

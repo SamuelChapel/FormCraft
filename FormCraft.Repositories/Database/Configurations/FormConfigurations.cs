@@ -12,5 +12,9 @@ public class FormConfigurations : IEntityTypeConfiguration<Form>
             .WithMany(c => c.Forms)
             .OnDelete(DeleteBehavior.NoAction)
             .IsRequired();
+
+        builder.HasMany(f => f.Questions)
+            .WithOne(q => q.Form)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
