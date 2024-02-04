@@ -47,7 +47,7 @@ public class AnswerController : Controller
         try
         {
             await _answerBusiness.Delete(new DeleteAnswerRequest(Id));
-            return Ok(Id);
+            return NoContent();
         }
         catch
         {
