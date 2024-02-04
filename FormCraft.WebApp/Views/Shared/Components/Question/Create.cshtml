@@ -2,12 +2,12 @@
 
 <div class="create-question card">
     <div class="create-question-title-container">
-        <input id="question-title" asp-for="Label" type="text" class="form-control" required>
+        <input id="question-title" value="@Model.Label" type="text" data-id="@Model.Id" class="form-control" onblur="UpdateQuestionLabel(this)">
 
-        <select class="form-select" name="question-type">
+        <select class="form-select" name="question-type" data-id="@Model.Id" data-question-id="@Model.Id" onchange="UpdateQuestionType(this)">
             @foreach (QuestionTypeEnum questionType in Enum.GetValues<QuestionTypeEnum>())
             {
-                <option value=@questionType>@questionType</option>
+                <option value=@((int)questionType)>@questionType</option>
             }
         </select>
 
@@ -20,7 +20,7 @@
         </button>
     </div>
 
-    <div id="@Model.Number-question-answers">
+    <div id="@Model.Number-question-answers" class="question-answers-container card">
 
     </div>
 

@@ -61,17 +61,16 @@ public class QuestionService : IQuestionService
 
     public async Task<QuestionResponse> Update(UpdateQuestionRequest request)
     {
-        var questionToUpdate = await GetById(request.Id);
+        var questionToUpdate = await _questionRepository.GetById(request.Id) ?? throw new NotFoundException("Question not found");
 
         var form = await _formBusiness.GetById(questionToUpdate.FormId);
 
         if (form.StatusId != StatusEnum.InProgress)
-            throw new BadRequestException("From status not available");
+            throw new BadRequestException("From not updatable");
 
-        var question = _mapper.Map<Question>(questionToUpdate);
-        question.Label = request.Label ?? question.Label;
-        await _questionRepository.Update(question);
+        questionToUpdate.Label = request.Label ?? questionToUpdate.Label;
+        questionToUpdate = await _questionRepository.Update(questionToUpdate);
 
-        return _mapper.Map<QuestionResponse>(question);
+        return _mapper.Map<QuestionResponse>(questionToUpdate);
     }
 }

@@ -55,12 +55,11 @@ namespace FormCraft.Business.Services
 
         public async Task<AnswerResponse> Update(UpdateAnswerRequest request)
         {
-            var answerToUpdate = await GetById(request.Id);
-            var answer = _mapper.Map<Answer>(answerToUpdate);
+            var answerToUpdate = await _answerRepository.GetById(request.Id) ?? throw new Exception("Answer not found");
 
-            answer.Label = request.Label;
+            answerToUpdate.Label = request.Label;
 
-            await _answerRepository.Update(answer);
+            answerToUpdate = await _answerRepository.Update(answerToUpdate);
 
             return _mapper.Map<AnswerResponse>(answerToUpdate);
         }

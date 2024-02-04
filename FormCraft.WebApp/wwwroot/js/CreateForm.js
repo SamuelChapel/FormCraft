@@ -1,5 +1,36 @@
 ﻿const questionsContainer = document.getElementById("question-list-container");
 
+const UpdateQuestionLabel = e => {
+    $.post('/Question/Update', {
+        Id: e.getAttribute("data-id"),
+        Label: e.value
+    });
+}
+
+const UpdateQuestionType = e => {
+    $.post('/Question/Update', {
+        Id: e.getAttribute("data-id"),
+        QuestionTypeId: e.value
+    });
+}
+
+const UpdateAnswer = e => {
+    $.post('/Answer/Update', {
+        Id: e.getAttribute("data-id"),
+        Label: e.value
+    });
+}
+
+const RemoveQuestion = e => {
+    $.post('/Question/Delete', {
+        Id: e.getAttribute("data-id")
+    },
+        () => {
+            e.parentElement.parentElement.remove();
+        }
+    );
+}
+
 const AddAnswer = e => {
     $.post('/Answer/Create', {
         Label: 'Answer',
@@ -11,22 +42,11 @@ const AddAnswer = e => {
     );
 };
 
-const RemoveQuestion = e => {
-    $.post('/Question/Delete', {
-        Id: e.getAttribute("data-id")
-    },
-        response => {
-            e.parentElement.parentElement.remove();
-        }
-    );
-}
-
 const RemoveAnswer = e => {
     $.post('/Answer/Delete', {
         Id: e.getAttribute("data-id")
     },
-        response => {
-            console.log(e.parentElement);
+        () => {
             e.parentElement.remove();
         }
     );

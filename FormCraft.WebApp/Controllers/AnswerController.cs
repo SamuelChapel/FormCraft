@@ -37,7 +37,7 @@ public class AnswerController : Controller
         }
         catch
         {
-            return View();
+            return BadRequest();
         }
     }
 
@@ -47,7 +47,7 @@ public class AnswerController : Controller
         try
         {
             await _answerBusiness.Delete(new DeleteAnswerRequest(Id));
-            return Ok();
+            return Ok(Id);
         }
         catch
         {

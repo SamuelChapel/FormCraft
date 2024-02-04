@@ -1,7 +1,7 @@
 ﻿@model AnswerResponse
 
 <div class="create-answer">
-    <input id="question-title" type="text" class="form-control" required>
+    <input id="question-title" type="text" value="@Model.Label" data-id="@Model.Id" class="form-control" onblur="UpdateAnswer(this)">
     <button class="btn btn-outline-danger"
             data-id="@Model.Id"
             onclick="RemoveAnswer(this)">

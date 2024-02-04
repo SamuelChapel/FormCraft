@@ -39,22 +39,6 @@ public class QuestionController(IQuestionService questionService) : ControllerBa
         return CreatedAtAction(nameof(GetById), new { question.Id }, question);
     }
 
-    [HttpPost]
-    [ProducesResponseType(201)]
-    public async Task<ActionResult<QuestionResponse>> Create(
-
-                    int Number,
-                    string Label,
-                    int QuestionTypeId,
-                    string FormId)
-    {
-        var request = new CreateQuestionRequest(Number, Label, QuestionTypeId, FormId);
-
-        var question = await _questionService.Create(request);
-
-        return CreatedAtAction(nameof(GetById), new { question.Id }, question);
-    }
-
     [HttpPut]
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]

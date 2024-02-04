@@ -7,3 +7,9 @@
     display: flex;
     justify-content: space-between;
 }
+
+.question-answers-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
