@@ -48,34 +48,34 @@ namespace FormCraft.Repositories.Database.Repositories
                 .Include(f => f.FormType)
                 .Include(f => f.Status)
                 .Include(f => f.Creator)
-                .AsQueryable();
+                .AsQueryable().ToList();
 
             if (label is not null)
             {
                 result = result.Where(f =>
                 f.Label.Contains(label, StringComparison.InvariantCultureIgnoreCase) ||
-                f.Creator!.UserName!.Contains(label, StringComparison.InvariantCultureIgnoreCase));
+                f.Creator!.UserName!.Contains(label, StringComparison.InvariantCultureIgnoreCase)).ToList();
             }
 
             if (type.Length != 0)
             {
-                result = result.Where(f => type.Any(t => f.FormType!.Label == t));
+                result = result.Where(f => type.Any(t => f.FormType!.Label == t)).ToList();
             }
 
             if (status.Length != 0)
             {
-                result = result.Where(f => status.Any(t => f.Status!.Label == t));
+                result = result.Where(f => status.Any(t => f.Status!.Label == t)).ToList();
             }
 
             return order switch
             {
-                1 => await result.OrderBy(f => f.StatusId).ToListAsync(),
-                2 => await result.OrderBy(f => f.FormTypeId).ToListAsync(),
-                3 => await result.OrderBy(f => f.Label).ToListAsync(),
-                4 => await result.OrderByDescending(f => f.Label).ToListAsync(),
-                5 => await result.OrderBy(f => f.CreatedAt).ToListAsync(),
-                6 => await result.OrderByDescending(f => f.CreatedAt).ToListAsync(),
-                _ => await result.ToListAsync()
+                1 =>  result.OrderBy(f => f.StatusId).ToList(),
+                2 =>  result.OrderBy(f => f.FormTypeId).ToList(),
+                3 =>  result.OrderBy(f => f.Label).ToList(),
+                4 =>  result.OrderByDescending(f => f.Label).ToList(),
+                5 =>  result.OrderBy(f => f.CreatedAt).ToList(),
+                6 =>  result.OrderByDescending(f => f.CreatedAt).ToList(),
+                _ =>  result.ToList()
             };
         }
     }
