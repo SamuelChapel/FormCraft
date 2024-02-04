@@ -30,9 +30,9 @@ $(function () {
         //let isTypeCommentChecked = $('#formTypeInput-Comment').is(":checked");
         //let isTypeEvaluationChecked = $('#formTypeInput-Evaluation').is(":checked");
 
-        let isInProgressChecked = $('#statusInput-InProgress').is(":checked");
-        let isValidatedChecked = $('#statusInput-Validated').is(":checked");
-        let isClosedChecked = $('#statusInput-Closed').is(":checked");
+        //let isInProgressChecked = $('#statusInput-InProgress').is(":checked");
+        //let isValidatedChecked = $('#statusInput-Validated').is(":checked");
+        //let isClosedChecked = $('#statusInput-Closed').is(":checked");
 
         let formTypeValues = $('input[name="IsFormTypePicked"]:checked').map(function () {
             return $(this).val();
@@ -42,30 +42,29 @@ $(function () {
             return $(this).val();
         }).get();
 
-        //let formRequest = {
-        //    Label: label,
-        //    CurrentUserId: userId,
-        //    IsStatusEnumPicked: [isInProgressChecked, isValidatedChecked, isClosedChecked],
-        //    IsFormTypePicked: [isTypeSurveyChecked, isTypeCommentChecked, isTypeEvaluationChecked],
-        //    Order: order
-        //};
-
-        let formRequest = {
+        let request = {
             Label: label,
             CurrentUserId: userId,
             IsStatusEnumPicked: statusValues,
             IsFormTypePicked: formTypeValues,
-            Order: order
+            Order: parseInt(order)
         };
 
-        console.log("request test", formRequest);
+        console.log("request test", request);
 
-        $.post("/Form/Search", formRequest, data => {
+        $.post("/Form/Search", request = request, data => {
+
+            console.log("enter method");
+
             $('#list-container').empty();
             $('#list-container').html(data);
         }
         );
+
         e.preventDefault();
     });
 });
+
+
+
 
