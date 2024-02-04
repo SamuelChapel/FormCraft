@@ -27,6 +27,7 @@ const RemoveQuestion = e => {
     },
         () => {
             e.parentElement.parentElement.remove();
+            UpdateCraftButtonStatus();
         }
     );
 }
@@ -50,18 +51,40 @@ const RemoveAnswer = e => {
             e.parentElement.remove();
         }
     );
+
+    e.preventDefault();
+}
+
+const UpdateCraftButtonStatus = () => {
+    if ($('#question-list-container').children().length == 0) {
+        $('#validate-form-button').prop('disabled', true);
+    } else {
+        $('#validate-form-button').prop('disabled', false);
+    }
 }
 
 $(function () {
     $('#add-question-button').on('click', e => {
+        let number = $('#question-list-container').children().length + 1;
         $.post('/Question/Create', {
-            Number: $('#question-list-container').children().length + 1,
+            Number: number,
             Label: 'Question Title',
             QuestionTypeId: 1,
             FormId: e.target.getAttribute("data-form-id")
         },
             (questionResponse) => {
                 $('#question-list-container').append(questionResponse);
+                UpdateCraftButtonStatus();
+                let question = $('#question-list-container').last();
+
+                $.post('/Answer/Create', {
+                    Label: 'Answer',
+                    QuestionId: $('#' + number + '-question-title').data('id')
+                },
+                    (answerResponse) => {
+                        $('#' + number + '-question-answers').append(answerResponse);
+                    }
+                );
             }
         );
 

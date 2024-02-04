@@ -2,7 +2,8 @@
 
 <div class="create-question card">
     <div class="create-question-title-container">
-        <input id="question-title" value="@Model.Label" type="text" data-id="@Model.Id" class="form-control" onblur="UpdateQuestionLabel(this)">
+        <p class="question-number">@Model.Number</p>
+        <input id="@(Model.Number)-question-title" value="@Model.Label" type="text" data-id="@Model.Id" class="form-control" onblur="UpdateQuestionLabel(this)">
 
         <select class="form-select" name="question-type" data-id="@Model.Id" data-question-id="@Model.Id" onchange="UpdateQuestionType(this)">
             @foreach (QuestionTypeEnum questionType in Enum.GetValues<QuestionTypeEnum>())
@@ -16,7 +17,7 @@
                 class="btn btn-outline-danger"
                 data-id="@Model.Id"
                 onclick="RemoveQuestion(this);">
-            Remove Question
+            Remove
         </button>
     </div>
 
@@ -29,7 +30,7 @@
             class="btn btn-outline-primary"
             data-question-id="@Model.Id"
             data-question-number="@Model.Number"
-            onclick="AddAnswer(this)">
+            onclick="AddAnswer(this);">
         Add answer
     </button>
 </div>

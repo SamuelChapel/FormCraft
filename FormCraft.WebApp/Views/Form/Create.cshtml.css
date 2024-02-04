@@ -1,11 +1,11 @@
 ﻿.create-form-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-
+    background-color: aliceblue;
     gap: 30px;
-    margin: 30px;
+    padding: 20px;
+    min-height: 83vh;
 }
 
 .create-form-title-container {
@@ -19,5 +19,4 @@
     justify-content: center;
     align-items: center;
     gap: 30px;
-    margin: 30px;
 }
