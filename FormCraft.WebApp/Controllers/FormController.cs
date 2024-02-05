@@ -142,9 +142,15 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
     [ProducesResponseType(404)]
     public async Task<IActionResult> Delete(DeleteFormRequest request)
     {
+
+        if (!HttpContext.User.Identity!.IsAuthenticated)
+            throw new BadRequestException("Delete not authorize");
+
+        var user = await _userManager.GetUserAsync(HttpContext.User);
+
         try
         {
-            await _formBusiness.Delete(request);
+            await _formBusiness.Delete(request, user!.Id, User.IsInRole("Admin"));
             return NoContent();
             ;
         }

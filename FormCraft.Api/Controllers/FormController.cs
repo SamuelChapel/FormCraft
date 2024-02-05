@@ -48,14 +48,4 @@ public class FormController(IFormBusiness formBusiness) : ControllerBase
 
         return Ok(form);
     }
-
-    [HttpDelete]
-    [ProducesResponseType(204)]
-    [ProducesResponseType(404)]
-    public async Task<IActionResult> Delete(DeleteFormRequest id)
-    {
-        await _formBusiness.Delete(id);
-
-        return NoContent();
-    }
 }

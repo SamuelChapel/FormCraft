@@ -28,12 +28,12 @@ namespace FormCraft.Business.Services
             return formResponse;
         }
 
-        //Add Validate method ?
-        //Add Close method ?
-
-        public async Task Delete(DeleteFormRequest request)
+        public async Task Delete(DeleteFormRequest request, string creatorId, bool isAdmin)
         {
             var formToDelete = await _formRepository.GetById(request.Id) ?? throw new NotFoundException("Form not found");
+
+            if (!isAdmin && formToDelete.CreatorId != creatorId)
+                throw new BadRequestException("Delete form not authorize");
 
             if (formToDelete.StatusId != StatusEnum.InProgress)
                 throw new Exception("Form status not available");
