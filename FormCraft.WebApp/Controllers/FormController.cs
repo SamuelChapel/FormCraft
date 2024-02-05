@@ -86,16 +86,8 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
         int? Order
         )
     {
-        List<string> list = [];
 
-        var IsAuthenticated = HttpContext.User.Identity!.IsAuthenticated;
 
-        if (!IsAuthenticated)
-        {
-            var itemToDelete = IsStatusEnumPIcked.FirstOrDefault(s => s == StatusEnum.InProgress.ToString());
-            list = IsStatusEnumPIcked.ToList();
-            list.Remove(itemToDelete!);
-        }
 
         var Id = (await _userManager.GetUserAsync(HttpContext.User))?.Id;
         CurrentUserId = Id;
@@ -105,13 +97,20 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
             CurrentUserId = CurrentUserId,
             IsFormTypePicked = IsFormTypePicked,
             Order = Order,
-            IsStatusEnumPicked = list.ToArray(),
+            IsStatusEnumPicked = IsStatusEnumPIcked,
             Label = Label
         };
 
         var searchResult = await _formBusiness.Search(request);
 
+        var IsAuthenticated = HttpContext.User.Identity!.IsAuthenticated;
+        if (!IsAuthenticated)
+        {
+            searchResult = searchResult.Where(f => f.StatusId != StatusEnum.InProgress).ToList();
+        }
+
         var resultList = _mapper.Map<List<FormResponseViewModel>>(searchResult);
+
 
         return ViewComponent("FormRows", resultList);
     }
