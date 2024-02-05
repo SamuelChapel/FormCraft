@@ -151,7 +151,6 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
         {
             await _formBusiness.Delete(request, user!.Id, User.IsInRole("Admin"));
             return NoContent();
-            ;
         }
         catch (NotFoundException e)
         {

@@ -88,6 +88,7 @@ namespace FormCraft.Business.Services
 
             formToDuplicate.Id = Guid.NewGuid().ToString();
             formToDuplicate.CreatorId = creatorId;
+            formToDuplicate.StatusId = StatusEnum.InProgress;
 
             var formDuplicated = await _formRepository.Create(formToDuplicate);
 

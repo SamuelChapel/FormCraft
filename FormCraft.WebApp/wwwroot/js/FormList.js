@@ -1,4 +1,10 @@
 ﻿
+let timer;
+function addTimer() {
+
+    clearTimeout(timer);
+    timer = setTimeout(SearchForm, 300);
+}
 const SearchForm = () => {
     let label = $('#labelInput').val();
     let userId = "";
@@ -23,17 +29,11 @@ const SearchForm = () => {
     $.post("/Form/Search", request, data => {
         $('#list-container').empty();
         $('#list-container').html(data);
+        duplicateFormEvent();
+        deleteFormEvent();
     }
     );
 }
-
-let timer;
-function addTimer() {
-
-    clearTimeout(timer);
-    timer = setTimeout(SearchForm, 300);
-}
-
 const onChangeEvents = () => {
 
     let labelInput = document.querySelector('#labelInput');
@@ -45,39 +45,32 @@ const onChangeEvents = () => {
         .forEach(c => c.addEventListener('change', addTimer));
 }
 
+const deleteFormEvent = () => {
+    $(".delete").each((i, b) => {
 
-
-$(function () {
-    //Delete
-    $(".delete").on('click', e => {
-        var formId = $(this).data("form-id");
-
-        if (confirm('Are you sure ?')) {
-            $.post("/Form/Delete", { id: formId },
-                data => {
-                    alert('Deleted');
-                    $("#row-" + formId).remove();
-                })
-                .fail(function (error) {
-                    alert('Error !');
-                    console.error(error);
-                });
-        }
-        e.preventDefault();
+        var formId = $(b).data("form-id");
+        $(b).on('click', e => {
+            if (confirm('Are you sure ?')) {
+                $.post("/Form/Delete", { id: formId },
+                    data => {
+                        $("#row-" + formId).remove();
+                        alert('Deleted');
+                    })
+                    .fail(function (error) {
+                        alert('Error !');
+                        console.error(error);
+                    });
+            }
+            e.preventDefault();
+        });
     });
+}
 
-    //Search
-    $("#searchBtn").on('click', e => SearchForm(e));
-
-    onChangeEvents();
-});
-
-$(function () {
+const duplicateFormEvent = () => {
     $(".duplicate").each((i, b) => {
 
         var formId = $(b).data("form-id");
         $(b).on('click', e => {
-            console.log('enter in duplicate method')
             $.post("/Form/Duplicate", { id: formId },
                 data => {
                     $('#list-container').append(data);
@@ -87,10 +80,16 @@ $(function () {
             e.preventDefault();
         })
     });
+}
 
-    //document.querySelectorAll('.duplicate')
-    //    .forEach(b => {
-    //        var formId = $(b).data("form-id");
+$(function () {
+    $("#searchBtn").on('click', e => SearchForm(e));
 
-    //})
+    //Delete
+    deleteFormEvent();
+    //Search
+    onChangeEvents();
+    //Duplicate
+    duplicateFormEvent();
 });
+
