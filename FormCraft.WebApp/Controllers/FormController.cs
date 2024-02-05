@@ -88,6 +88,8 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
             };
             ViewBag.NumberOfSounders = _formBusiness.SounderCount(id);
 
+            ViewBag.NumberOfSounders = _formBusiness.SounderCount(id);
+
             return View(formVm);
         }
         catch (NotFoundException)
