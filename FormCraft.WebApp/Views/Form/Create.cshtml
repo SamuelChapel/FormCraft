@@ -50,7 +50,7 @@
                     <div id="@question.Question.Number-question-answers" class="question-answers-container card">
                         @foreach (AnswerResponse answer in question.Answers)
                         {
-                            <vc:create-answer answer="answer"/>
+                            <vc:create-answer answer="answer" />
                         }
                     </div>
 
@@ -85,7 +85,7 @@
                     type="button"
                     class="btn btn-primary"
                     data-form-id="@Model.CreateFormModel.Id"
-                    disabled>
+                    @(Model.Questions.Count == 0 ? "disabled" : "")>
                 CRAFT
             </button>
         </div>
