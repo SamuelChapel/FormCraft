@@ -12,6 +12,7 @@ namespace FormCraft.Business.Contracts
         public Task<FormResponse> Update(UpdateFormRequest request);
         public Task<List<FormResponse>> Search(SearchFormRequest searchRequest);
         public Task<FormWithQuestionsResponse> Duplicate(string id, string creatorId);
+        Task<int> SounderCount(string id);
 
     }
 }

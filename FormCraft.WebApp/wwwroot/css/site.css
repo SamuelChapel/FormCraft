@@ -1,5 +1,10 @@
+*{
+     font-family: 'Epilogue', sans-serif;
+    font-family: 'Kanit', sans-serif;
+}
+
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {

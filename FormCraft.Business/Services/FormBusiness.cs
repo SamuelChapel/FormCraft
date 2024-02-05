@@ -94,5 +94,10 @@ namespace FormCraft.Business.Services
 
             return _mapper.Map<FormWithQuestionsResponse>(formDuplicated);
         }
+
+        public async Task<int> SounderCount(string id)
+        {
+            return await _formRepository.SounderCount(id);
+        }
     }
 }

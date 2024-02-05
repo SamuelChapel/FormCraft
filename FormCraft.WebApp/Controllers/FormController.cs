@@ -9,6 +9,7 @@ using FormCraft.WebApp.ViewModels;
 using FormCraft.WebApp.ViewModels.FormViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace FormCraft.WebApp.Controllers;
 
@@ -63,6 +64,7 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
     [ProducesResponseType(404)]
     public async Task<IActionResult> Details(string id)
     {
+
         try
         {
             var form = await _formBusiness.GetById(id);
@@ -84,6 +86,9 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
                 StatusEnum.Closed => View(_mapper.Map<FormDetailsViewModel>(form)),
                 _ => View(nameof(Index))
             };
+            ViewBag.NumberOfSounders = _formBusiness.SounderCount(id);
+
+            return View(formVm);
         }
         catch (NotFoundException)
         {

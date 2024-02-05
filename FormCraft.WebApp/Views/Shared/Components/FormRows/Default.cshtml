@@ -4,7 +4,7 @@
 
 @foreach (var form in Model)
 {
-    <tr id="row-@form.Id">
+   @*  <tr id="row-@form.Id">
         <td>@form.CreatorName</td>
         <td>@form.Label</td>
         <td>@form.FormTypeId</td>
@@ -41,5 +41,22 @@
         <td>
             <a class="btn btn-warning duplicate" data-form-id="@form.Id">Duplicate</a>
         </td>
-    </tr>
+    </tr> *@
+
+    <div class="card w-50 col-md-6">
+        <div class="card-header">
+            @form.CreatorName
+        
+        </div>
+        <div class="card-body">
+            
+            <h5 class="card-title">@form.Label</h5>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <p>@form.StatusId</p>
+            <p>  @form.FormTypeId</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <a class="btn btn-danger delete" data-form-id="@form.Id">Delete</a>
+            <a class="btn btn-warning duplicate" data-form-id="@form.Id">Duplicate</a>
+        </div>
+    </div>
 }

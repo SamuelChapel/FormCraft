@@ -2,13 +2,15 @@
 
 @model FormDetailsViewModel
 
-    <div class="text-center form-container">
-        <h2>@Model.Label</h2>
+<div class="text-center form-container">
+    <h2>@Model.Label</h2>
 
-        @foreach (QuestionResponse question in Model.Questions)
-        {
-            <div class="col-lg-6">
-                <vc:question question="@question" view="Display"/>
-            </div>
-        }
-    </div>
+    @foreach (QuestionResponse question in Model.Questions)
+    {
+        <div class="col-lg-6">
+            <vc:question question="@question" view="Display" />
+        </div>
+    }
+    <span>Numbers of question</span>
+    <p>@Model.Questions.Count</p>
+</div>

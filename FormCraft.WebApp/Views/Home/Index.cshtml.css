@@ -1,4 +1,9 @@
-﻿.index-main {
+﻿* {
+    font-family: 'Epilogue', sans-serif;
+    font-family: 'Kanit', sans-serif;
+}
+
+.index-main {
     position: relative;
     width: 100%;
 }
@@ -12,7 +17,6 @@
 .create-survey-text {
     width: 856px;
     height: 104px;
-    font-family: 'K2D';
     font-style: normal;
     font-weight: 700;
     font-size: 80px;
@@ -22,7 +26,6 @@
     padding-left: 100px;
     width: 551px;
     height: 132px;
-    font-family: 'K2D';
     font-style: normal;
     font-weight: 400;
     font-size: 40px;
@@ -42,7 +45,6 @@
 
 .choose-type-text {
     color: white;
-    font-family: 'K2D';
     font-style: normal;
     font-weight: 700;
     font-size: 80px;
@@ -51,7 +53,6 @@
 
 .custom-survey-text {
     color: white;
-    font-family: 'K2D';
     font-style: normal;
     font-weight: 700;
     font-size: 40px;
@@ -96,7 +97,6 @@
 }
 
 .collect-result-text {
-    font-family: 'K2D';
     font-style: normal;
     font-weight: 400;
     font-size: 80px;
@@ -106,7 +106,6 @@
 .collect-result-text-sub {
     text-align: center;
     width: 702px;
-    font-family: 'K2D';
     font-style: normal;
     font-weight: 400;
     font-size: 40px;
@@ -140,7 +139,6 @@
 }
 
 .begin-form-text {
-    font-family: 'K2D';
     font-style: normal;
     font-weight: 700;
     font-size: 50px;
@@ -154,7 +152,6 @@
     background: #4D87CB;
     border: 3.60725px solid #184066;
     border-radius: 9.01813px;
-    font-family: 'K2D';
     font-style: normal;
     font-weight: 700;
     font-size: 27.0544px;

@@ -28,7 +28,7 @@ namespace FormCraft.Repositories.Database.Repositories
             => await _context.Forms.Include(f => f.Creator).ToListAsync();
 
         public async Task<Form?> GetById(string id)
-            => await _context.Forms/*.Include(f => f.Creator.UserName)*/
+            => await _context.Forms
             .Include(f => f.Questions.OrderBy(q => q.Number))
             .ThenInclude(q => q.Answers)
             .AsSplitQuery()
@@ -69,14 +69,24 @@ namespace FormCraft.Repositories.Database.Repositories
 
             return order switch
             {
-                1 =>  result.OrderBy(f => f.StatusId).ToList(),
-                2 =>  result.OrderBy(f => f.FormTypeId).ToList(),
-                3 =>  result.OrderBy(f => f.Label).ToList(),
-                4 =>  result.OrderByDescending(f => f.Label).ToList(),
-                5 =>  result.OrderBy(f => f.CreatedAt).ToList(),
-                6 =>  result.OrderByDescending(f => f.CreatedAt).ToList(),
-                _ =>  result.ToList()
+                1 => result.OrderBy(f => f.StatusId).ToList(),
+                2 => result.OrderBy(f => f.FormTypeId).ToList(),
+                3 => result.OrderBy(f => f.Label).ToList(),
+                4 => result.OrderByDescending(f => f.Label).ToList(),
+                5 => result.OrderBy(f => f.CreatedAt).ToList(),
+                6 => result.OrderByDescending(f => f.CreatedAt).ToList(),
+                _ => result.ToList()
             };
+        }
+
+
+        public async Task<int> SounderCount(string id)
+        {
+            var form = await GetById(id);
+
+            //int answerCount = _context.Answers.Where(a => a.Question.FormId == id).Sum(a => a.Total);
+            //return answerCount / form!.Questions.Count;
+            return _context.Answers.Where(a => a.Question.FormId == id).Sum(a => a.Total);
         }
     }
 }

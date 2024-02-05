@@ -5,6 +5,7 @@ function addTimer() {
     clearTimeout(timer);
     timer = setTimeout(SearchForm, 300);
 }
+
 const SearchForm = () => {
     let label = $('#labelInput').val();
     let userId = "";
@@ -34,6 +35,7 @@ const SearchForm = () => {
     }
     );
 }
+
 const onChangeEvents = () => {
 
     let labelInput = document.querySelector('#labelInput');
