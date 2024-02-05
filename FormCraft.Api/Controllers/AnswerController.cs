@@ -1,6 +1,8 @@
 ﻿using FormCraft.Business.Contracts;
+using FormCraft.Business.Contracts.Exceptions;
 using FormCraft.Business.Contracts.Requests.Answer;
 using FormCraft.Business.Contracts.Responses.Answer;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FormCraft.Api.Controllers;
@@ -56,6 +58,15 @@ public class AnswerController(IAnswerBusiness answerBusiness) : ControllerBase
     {
         await _answerBusiness.Delete(id);
 
+        return NoContent();
+    }
+
+    [HttpPost("AddUserAnswer")]
+    [ProducesResponseType(204)]
+    [ProducesResponseType(404)]
+    public async Task<ActionResult> AddUserAnswer(CreateUserAnswerRequest request)
+    {
+        await _answerBusiness.AddUserAnswer(request);
         return NoContent();
     }
 }

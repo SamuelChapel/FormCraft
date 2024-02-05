@@ -1,5 +1,6 @@
 ﻿using FormCraft.Business.Contracts.Requests.Answer;
 using FormCraft.Business.Contracts.Responses.Answer;
+using FormCraft.Entities;
 
 namespace FormCraft.Business.Contracts
 {
@@ -10,5 +11,6 @@ namespace FormCraft.Business.Contracts
         public Task<List<AnswerResponse>> GetAll();
         public Task<AnswerResponse> GetById(string id);
         public Task<AnswerResponse> Update(UpdateAnswerRequest request);
+        public Task AddUserAnswer(CreateUserAnswerRequest request);
     }
 }

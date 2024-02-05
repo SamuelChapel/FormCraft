@@ -5,5 +5,6 @@ namespace FormCraft.Repositories.Contracts
 {
     public interface IAnswerRepository : IReadRepository<Answer> ,IWriteRepository<Answer>
     {
+        public Task AddUserAnswer(AppUserAnswer userAnswer);
     }
 }

@@ -37,5 +37,11 @@ namespace FormCraft.Repositories.Database.Repositories
 
             return entity;
         }
+
+        public async Task AddUserAnswer(AppUserAnswer userAnswer)
+        {
+            await _context.AppUserAnswer.AddAsync(userAnswer);
+            await _context.SaveChangesAsync();
+        }
     }
 }

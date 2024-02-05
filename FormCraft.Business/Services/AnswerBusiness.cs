@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FormCraft.Business.Contracts;
+using FormCraft.Business.Contracts.Exceptions;
 using FormCraft.Business.Contracts.Requests.Answer;
 using FormCraft.Business.Contracts.Responses.Answer;
 using FormCraft.Entities;
@@ -62,6 +63,19 @@ namespace FormCraft.Business.Services
             answerToUpdate = await _answerRepository.Update(answerToUpdate);
 
             return _mapper.Map<AnswerResponse>(answerToUpdate);
+        }
+        public async Task AddUserAnswer(CreateUserAnswerRequest request)
+        {
+            if (await _answerRepository.GetById(request.AnswerId) is not null)
+            {
+                var userAnswer = _mapper.Map<AppUserAnswer>(request);
+                await _answerRepository.AddUserAnswer(userAnswer);
+            }
+            else
+            {
+                throw new BadRequestException("The answer don't exist");
+            }
+            
         }
     }
 }

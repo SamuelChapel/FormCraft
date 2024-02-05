@@ -1,5 +1,9 @@
-﻿using FormCraft.Business.Contracts;
+﻿using Azure.Core;
+using FormCraft.Business.Contracts;
+using FormCraft.Business.Contracts.Exceptions;
 using FormCraft.Business.Contracts.Requests.Answer;
+using FormCraft.Entities;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FormCraft.WebApp.Controllers;
@@ -52,6 +56,20 @@ public class AnswerController : Controller
         catch
         {
             return BadRequest();
+        }
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> AddUserAnswer(CreateUserAnswerRequest request)
+    {
+        try
+        {
+            await _answerBusiness.AddUserAnswer(request);
+            return NoContent();
+        }
+        catch (BadRequestException ex) 
+        {
+            return BadRequest(ex.Message);
         }
     }
 }

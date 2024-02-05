@@ -20,6 +20,8 @@ public static class DependencyInjection
             conf.CreateMap<CreateAnswerRequest, Answer>();
             conf.CreateMap<Answer, AnswerResponse>();
 
+            conf.CreateMap<CreateUserAnswerRequest, AppUserAnswer>();
+
             conf.CreateMap<Question, QuestionResponse>().ReverseMap();
             conf.CreateMap<Question, DeleteQuestionRequest>().ReverseMap();
             conf.CreateMap<CreateQuestionRequest, Question>();
