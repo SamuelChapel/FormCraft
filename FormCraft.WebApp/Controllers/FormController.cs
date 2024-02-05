@@ -61,14 +61,29 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
     [HttpGet("{id}")]
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
-    public async Task<ActionResult<FormResponse>> Details(string id)
+    public async Task<IActionResult> Details(string id)
     {
         try
         {
-            var reponse = await _formBusiness.GetById(id);
-            var formVm = _mapper.Map<FormDetailsViewModel>(reponse);
+            var form = await _formBusiness.GetById(id);
 
-            return View(formVm);
+            var formViewModel = new FormViewModel()
+            {
+                CreateFormModel = _mapper.Map<CreateFormModel>(form),
+                Questions = _mapper.Map<List<QuestionDetailsViewModel>>(form.Questions)
+            };
+
+            return form.StatusId switch
+            {
+                StatusEnum.InProgress => View("Create", new FormViewModel()
+                {
+                    CreateFormModel = _mapper.Map<CreateFormModel>(form),
+                    Questions = _mapper.Map<List<QuestionDetailsViewModel>>(form.Questions)
+                }),
+                StatusEnum.Validated => View(_mapper.Map<FormDetailsViewModel>(form)),
+                StatusEnum.Closed => View(_mapper.Map<FormDetailsViewModel>(form)),
+                _ => View(nameof(Index))
+            };
         }
         catch (NotFoundException)
         {

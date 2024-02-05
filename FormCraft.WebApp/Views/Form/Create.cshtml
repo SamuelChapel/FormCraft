@@ -26,7 +26,43 @@
         <div id="question-list-container">
             @foreach (QuestionDetailsViewModel question in Model.Questions)
             {
+                <div class="create-question card">
+                    <div class="create-question-title-container">
+                        <p class="question-number">@question.Question.Number</p>
+                        <input id="@question.Question.Number-question-title" value="@question.Question.Label" type="text" data-id="@question.Question.Id" class="form-control" onblur="UpdateQuestionLabel(this)">
 
+                        <select class="form-select" name="question-type" data-id="@question.Question.Id" data-question-id="@question.Question.Id" onchange="UpdateQuestionType(this)">
+                            @foreach (QuestionTypeEnum questionType in Enum.GetValues<QuestionTypeEnum>())
+                            {
+                                <option value=@((int)questionType)>@questionType</option>
+                            }
+                        </select>
+
+                        <button id="remove-question-button"
+                                type="button"
+                                class="btn btn-outline-danger"
+                                data-id="@question.Question.Id"
+                                onclick="RemoveQuestion(this);">
+                            Remove
+                        </button>
+                    </div>
+
+                    <div id="@question.Question.Number-question-answers" class="question-answers-container card">
+                        @foreach (AnswerResponse answer in question.Answers)
+                        {
+                            <vc:create-answer answer="answer"/>
+                        }
+                    </div>
+
+                    <button id="add-answer-button"
+                            type="button"
+                            class="btn btn-outline-primary"
+                            data-question-id="@question.Question.Id"
+                            data-question-number="@question.Question.Number"
+                            onclick="AddAnswer(this);">
+                        Add answer
+                    </button>
+                </div>
             }
         </div>
 
