@@ -1,4 +1,9 @@
-﻿@using FormCraft.WebApp.ViewModels.FormViewModels
+﻿@section scripts {
+    <script src="~/js/FormList.js" type="text/javascript" asp-append-version="true"></script>
+}
+
+
+@using FormCraft.WebApp.ViewModels.FormViewModels
 
 @model List<FormResponseViewModel>
 
@@ -23,6 +28,7 @@
 
 
         <input id="labelInput" class="form-control w-auto" type="search" name="search" placeholder="Search...">
+
         <input class="btn btn-outline-secondary" type="button" value="Search" id="searchBtn" />
 
 
@@ -77,6 +83,3 @@
     </tbody>
 </table>
 
-@section scripts {
-    <script src="~/js/FormList.js" type="text/javascript"></script>
-}
