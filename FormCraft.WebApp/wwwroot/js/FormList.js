@@ -1,16 +1,12 @@
 ﻿
 const SearchForm = () => {
-    console.log('launcher de la mort qui tue')
     let label = $('#labelInput').val();
     let userId = "";
     let order = $('#orderInput').val();
-
-    //let formTypeValues = $('input[name="IsFormTypePicked"]:checked').map(c => c.val()).get();
     let formTypeValues = $('input[name="IsFormTypePicked"]:checked').map(function () {
         return this.value;
     }).get();
 
-    //let statusValues = $('input[name="IsStatusEnumPicked"]:checked').map(c => c.val()).get();
     let statusValues = $('input[name="IsStatusEnumPicked"]:checked').map(function () {
         return this.value;
     }).get();
@@ -36,7 +32,6 @@ function addTimer() {
 
     clearTimeout(timer);
     timer = setTimeout(SearchForm, 300);
-    console.log('enter timer' + timer)
 }
 
 const onChangeEvents = () => {
@@ -45,13 +40,6 @@ const onChangeEvents = () => {
 
     labelInput.addEventListener('input', addTimer
     );
-
-    //$("#labelInput").on("blur", e => {
-    //    clearTimeout(timer);
-    //    timer = setTimeout(() => SearchForm(), 0);
-    //    e.preventDefault();
-    //    console.log('Enter change event');
-    //});
 
     document.querySelectorAll('.form-check-input')
         .forEach(c => c.addEventListener('change', addTimer));
@@ -82,4 +70,27 @@ $(function () {
     $("#searchBtn").on('click', e => SearchForm(e));
 
     onChangeEvents();
+});
+
+$(function () {
+    $(".duplicate").each((i, b) => {
+
+        var formId = $(b).data("form-id");
+        $(b).on('click', e => {
+            console.log('enter in duplicate method')
+            $.post("/Form/Duplicate", { id: formId },
+                data => {
+                    $('#list-container').append(data);
+                    alert('Duplication succeed');
+                }
+            )
+            e.preventDefault();
+        })
+    });
+
+    //document.querySelectorAll('.duplicate')
+    //    .forEach(b => {
+    //        var formId = $(b).data("form-id");
+
+    //})
 });

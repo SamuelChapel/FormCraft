@@ -81,5 +81,17 @@ namespace FormCraft.Business.Services
 
             return _mapper.Map<List<FormResponse>>(forms);
         }
+
+        public async Task<FormWithQuestionsResponse> Duplicate(string id, string creatorId)
+        {
+            var formToDuplicate = await _formRepository.GetById(id) ?? throw new Exception("Error");
+
+            formToDuplicate.Id = Guid.NewGuid().ToString();
+            formToDuplicate.CreatorId = creatorId;
+
+            var formDuplicated = await _formRepository.Create(formToDuplicate);
+
+            return _mapper.Map<FormWithQuestionsResponse>(formDuplicated);
+        }
     }
 }

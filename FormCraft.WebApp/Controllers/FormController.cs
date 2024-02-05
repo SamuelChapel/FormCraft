@@ -162,4 +162,16 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
             return BadRequest(e.Message);
         }
     }
+
+    [HttpPost]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(404)]
+    public async Task<ActionResult<FormResponse>> Duplicate(string id)
+    {
+        var creatorId = (await _userManager.GetUserAsync(HttpContext.User))?.Id;
+
+        var duplicatedForm = await _formBusiness.Duplicate(id, creatorId!);
+
+        return Ok(duplicatedForm);
+    }
 }
