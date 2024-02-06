@@ -1,5 +1,6 @@
 ﻿using Bogus;
 using FormCraft.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace FormCraft.Repositories.Database.Seeds;
@@ -12,9 +13,9 @@ public static class DataSeeds
         var questionTypes = QuestionTypesSeeds();
         var formStatus = FormStatusSeeds();
 
-        var appUserIds = Enumerable.Range(0, 10).Select(i => Guid.NewGuid().ToString()).Distinct().ToList();
+        var appUserIds = Enumerable.Range(0, 20).Select(i => Guid.NewGuid().ToString()).Distinct().ToList();
 
-        var forms = FormsSeeds(appUserIds, formTypes, questionTypes, formStatus, 50);
+        var forms = FormsSeeds(appUserIds, formTypes, questionTypes, formStatus, 100);
         var questions = forms.SelectMany(f => f.Questions).ToList();
         var answers = questions.SelectMany(q => q.Answers).ToList();
 
@@ -37,6 +38,8 @@ public static class DataSeeds
         builder.Entity<AppUser>().HasData(appUsers);
         builder.Entity<AppUserAnswer>().HasData(appUserAnswers);
 
+        builder.AddAdmin();
+
         return builder;
     }
 
@@ -58,16 +61,6 @@ public static class DataSeeds
             new() { Id = QuestionTypeEnum.RadioButton, Label = "RadioButton" },
             new() { Id = QuestionTypeEnum.Checkbox, Label = "Checkbox" },
             new() { Id = QuestionTypeEnum.Dropdown, Label = "Dropdown" },
-        ];
-    }
-
-    private static List<FormType> FormQuestionTypesSeeds() //Doublons ???
-    {
-        return
-        [
-            new() { Id = FormTypeEnum.Survey, Label = "Survey" },
-            new() { Id = FormTypeEnum.Comment, Label = "Comment" },
-            new() { Id = FormTypeEnum.Evaluation, Label = "Evaluation" }
         ];
     }
 
@@ -109,7 +102,7 @@ public static class DataSeeds
             .RuleFor(a => a.CreatedAt, f => f.Date.Past(2))
             .RuleFor(a => a.UpdatedAt, (f, current) => f.Date.Between(current.CreatedAt, DateTime.UtcNow))
             .RuleFor(a => a.Answers, (f, current) =>
-                Enumerable.Range(0, current.QuestionTypeId == QuestionTypeEnum.Open ? 1 : f.Random.Number(2, 5))
+                Enumerable.Range(0, f.Random.Number(2, 5))
                           .Select(i => AnswersSeed(current.Id)).ToList())
             .Generate();
     }
@@ -156,5 +149,27 @@ public static class DataSeeds
                 }).ToList();
             })
             .Generate()).ToList();
+    }
+
+    public static void AddAdmin(this ModelBuilder builder)
+    {
+        builder.Entity<IdentityRole>().HasData(new IdentityRole() { Id = "1", Name = "Admin", NormalizedName = "ADMIN" });
+
+        var hasher = new PasswordHasher<AppUser>();
+        var adminId = Guid.NewGuid().ToString();
+        builder.Entity<AppUser>().HasData(new AppUser()
+        {
+            Id = adminId,
+            Email = "Admin@FormCraft.com",
+            UserName = "Admin",
+            NormalizedUserName = "ADMIN",
+            PasswordHash = hasher.HashPassword(null!, "Password_Admin1")
+        });
+
+        builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+        {
+            RoleId = "1",
+            UserId = adminId
+        });
     }
 }
