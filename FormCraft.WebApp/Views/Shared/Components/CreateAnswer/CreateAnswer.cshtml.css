@@ -2,3 +2,13 @@
     display: flex;
     gap: 10px;
 }
+
+button {
+    background-color: transparent;
+    border-style: solid;
+    border-color:transparent;
+}
+
+svg path:hover {
+    fill:#f08d8d;
+}

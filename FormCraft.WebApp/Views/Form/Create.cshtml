@@ -11,9 +11,9 @@
 
         <div class="create-form-title-container">
 
-            <input id="form-title" name="formTitle" asp-for="@Model.CreateFormModel.Label" type="Text" onblur="" />
+            <input class="form-control" id="form-title" name="formTitle" asp-for="@Model.CreateFormModel.Label" type="Text" onblur="" style="font-size:1.4rem;"/>
 
-            <select id="form-type" name="formType" onchange="">
+            <select class="form-select" id="form-type" name="formType" onchange="">
                 @foreach (FormTypeEnum formType in Enum.GetValues<FormTypeEnum>())
                 {
                     <option value="@formType">@formType</option>
