@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
     <PackageReference Include="Moq" Version="4.20.70" />
     <PackageReference Include="xunit" Version="2.6.6" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.6">
@@ -28,10 +28,6 @@
     <ProjectReference Include="..\FormCraft.Business\FormCraft.Business.csproj" />
     <ProjectReference Include="..\FormCraft.Entities\FormCraft.Entities.csproj" />
     <ProjectReference Include="..\FormCraft.Tests.Commons\FormCraft.Tests.Commons.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="QuestionTest\" />
   </ItemGroup>
 
 </Project>

@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FormCraft.Business.Contracts\FormCraft.Business.Contracts.csproj" />
     <ProjectReference Include="..\FormCraft.Entities\FormCraft.Entities.csproj" />
   </ItemGroup>
 

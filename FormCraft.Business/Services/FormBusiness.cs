@@ -55,16 +55,14 @@ namespace FormCraft.Business.Services
 
         public async Task<FormResponse> Update(UpdateFormRequest request)
         {
-            var formToUpdate = await GetById(request.Id);
+            var form = await _formRepository.GetById(request.Id) ?? throw new NotFoundException("Form not found");
 
-            if (formToUpdate.StatusId != StatusEnum.InProgress
+            if (form.StatusId != StatusEnum.InProgress
                 || request.StatusId != null
-                && (formToUpdate.StatusId == StatusEnum.Validated && request.StatusId != StatusEnum.Closed || formToUpdate.StatusId == StatusEnum.InProgress && request.StatusId != StatusEnum.Validated))
+                && (form.StatusId == StatusEnum.Validated && request.StatusId != StatusEnum.Closed || form.StatusId == StatusEnum.InProgress && request.StatusId != StatusEnum.Validated))
             {
                 throw new BadRequestException("Form status not available");
             }
-
-            var form = _mapper.Map<Form>(formToUpdate);
 
             form.Label = request.Label ?? form.Label;
             form.StatusId = request.StatusId ?? form.StatusId;
@@ -84,7 +82,7 @@ namespace FormCraft.Business.Services
 
         public async Task<FormWithQuestionsResponse> Duplicate(string id, string creatorId)
         {
-            var formToDuplicate = await _formRepository.GetById(id) ?? throw new Exception("Error");
+            var formToDuplicate = await _formRepository.GetById(id) ?? throw new NotFoundException("Form not found");
 
             formToDuplicate.Id = Guid.NewGuid().ToString();
             formToDuplicate.CreatorId = creatorId;
