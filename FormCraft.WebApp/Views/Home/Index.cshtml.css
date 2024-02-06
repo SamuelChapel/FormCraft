@@ -122,8 +122,9 @@
 
 .computer-graphs-img {
     position: relative;
-    width: 836px;
-    height: 507px;
+    aspect-ratio: 360/202;
+    width: 500px;
+    height:300px;
     left: 30px;
 }
 
