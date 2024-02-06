@@ -86,7 +86,7 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
                 _ => View(nameof(Index))
             };
         }
-        catch (NotFoundException)
+        catch (NotFoundException) 
         {
             return NotFound();
         }

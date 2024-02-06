@@ -7,6 +7,6 @@ namespace FormCraft.Repositories.Contracts
     public interface IAnswerRepository : IReadRepository<Answer> ,IWriteRepository<Answer>
     {
         public Task AddUserAnswer(AppUserAnswer userAnswer);
-        public Task<AnswerResultResponseRepository> ChoiceByQuestion(string formId, int questionId);
+        public Task<List<AnswerResultResponseRepository>> ChoiceByQuestion(string formId, string questionId);
     }
 }

@@ -78,10 +78,10 @@ namespace FormCraft.Business.Services
             }
         }
 
-        public async Task<AnswerResultResponse> ChoiceByQuestion(string formId, int questionId)
+        public async Task<List<AnswerResultResponse>> ChoiceByQuestion(string formId, string questionId)
         {
             var response = await _answerRepository.ChoiceByQuestion(formId, questionId);
-            return _mapper.Map<AnswerResultResponse>(response);
+            return _mapper.Map<List<AnswerResultResponse>>(response);
         }
     }
 }
