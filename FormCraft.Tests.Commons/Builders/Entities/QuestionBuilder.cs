@@ -2,14 +2,14 @@
 
 
 
-namespace FormCraft.Tests.Commons.Builders
+namespace FormCraft.Tests.Commons.Builders.Entities
 {
     public class QuestionBuilder
     {
         private string _id = "testid";
         private int _number = 4;
         private string _label = "testlabel";
-        private QuestionType? _questionType = new QuestionType() { Id = QuestionTypeEnum.Open, Label = "testlabeltype"};
+        private QuestionType? _questionType = new QuestionType() { Id = QuestionTypeEnum.Open, Label = "testlabeltype" };
         private Form? _form = new Form() { Id = "idb" };
         private List<Answer> _answers = new List<Answer>();
 
