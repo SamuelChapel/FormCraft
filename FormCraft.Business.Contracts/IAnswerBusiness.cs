@@ -12,5 +12,7 @@ namespace FormCraft.Business.Contracts
         public Task<AnswerResponse> GetById(string id);
         public Task<AnswerResponse> Update(UpdateAnswerRequest request);
         public Task AddUserAnswer(CreateUserAnswerRequest request);
+
+        public Task<AnswerResultResponse> ChoiceByQuestion(string formId, int questionId);
     }
 }

@@ -2,6 +2,7 @@
 using FormCraft.Repositories.Contracts;
 using FormCraft.Repositories.Database.Contexts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 
 namespace FormCraft.Repositories.Database.Repositories
 {
@@ -78,15 +79,15 @@ namespace FormCraft.Repositories.Database.Repositories
                 _ => result.ToList()
             };
         }
-
-
         public async Task<int> SounderCount(string id)
         {
-            var form = await GetById(id);
-
-            //int answerCount = _context.Answers.Where(a => a.Question.FormId == id).Sum(a => a.Total);
-            //return answerCount / form!.Questions.Count;
-            return _context.Answers.Where(a => a.Question.FormId == id).Sum(a => a.Total);
+            return _context.AppUserAnswer
+                .Include(a => a.Answer)
+                .ThenInclude(a => a!.Question)
+                .ThenInclude(q => q.Form)
+                .Where(a => a.Answer!.Question.FormId == id)
+                .GroupBy(a => a.AppUserId)
+                .Count();
         }
     }
 }

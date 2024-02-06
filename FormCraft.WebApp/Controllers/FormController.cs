@@ -64,7 +64,6 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
     [ProducesResponseType(404)]
     public async Task<IActionResult> Details(string id)
     {
-
         try
         {
             var form = await _formBusiness.GetById(id);
@@ -83,14 +82,9 @@ public class FormController(IFormBusiness formBusiness, UserManager<AppUser> use
                     Questions = _mapper.Map<List<QuestionDetailsViewModel>>(form.Questions)
                 }),
                 StatusEnum.Validated => View(_mapper.Map<FormDetailsViewModel>(form)),
-                StatusEnum.Closed => View(_mapper.Map<FormDetailsViewModel>(form)),
+                StatusEnum.Closed => View("FormResults", new FormDetailsViewModel(form.Id, form.CreatorId, form.FormTypeId, form.StatusId, form.Label, form.Questions)),
                 _ => View(nameof(Index))
             };
-            ViewBag.NumberOfSounders = _formBusiness.SounderCount(id);
-
-            ViewBag.NumberOfSounders = _formBusiness.SounderCount(id);
-
-            return View(formVm);
         }
         catch (NotFoundException)
         {

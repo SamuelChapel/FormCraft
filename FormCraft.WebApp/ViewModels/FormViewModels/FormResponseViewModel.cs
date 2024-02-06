@@ -10,5 +10,7 @@ namespace FormCraft.WebApp.ViewModels.FormViewModels
         public FormTypeEnum FormTypeId { get; set; }
         public StatusEnum StatusId { get; set; }
         public string Label { get; set; } = null!;
+        public int SoundersNumber { get; set; }
+
     }
 }

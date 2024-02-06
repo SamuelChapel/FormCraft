@@ -2,38 +2,32 @@
     <script src="~/js/FormList.js" type="text/javascript" asp-append-version="true"></script>
 }
 
-
 @using FormCraft.WebApp.ViewModels.FormViewModels
 
 @model List<FormResponseViewModel>
 
-<h2 class="d-flex justify-content-center">Form List</h2>
+<h1 class="d-flex justify-content-center fw-bolder m-5">Form List</h1>
 
-<form class="input-group d-flex mb-3 w-auto" id="search-form-form">
+<form class="input-group d-flex mb-3 row" id="search-form-form">
     <div class="input-group">
 
+        <span class="input-group-text text-black text-opacity-50">Filter</span>
+
+        <input id="labelInput" class="form-control" type="search" name="search" placeholder="Search...">
+
+        <span class="input-group-text text-black text-opacity-50">Sort</span>
+
+        <select id="orderInput" class="form-select" name="order">
+            <option selected value=1>By status</option>
+            <option value=2>By type</option>
+            <option value=3>By Label ascending</option>
+            <option value=4>By Label descending</option>
+            <option value=5>By date ascending</option>
+            <option value=6>By date descending</option>
+        </select>
 
 
-        <span class="text-black text-opacity-50 d-flex align-items-center m-2">Sort</span>
-        <div class="dropdown">
-            <select id="orderInput" class="form-select" name="order">
-                <option value=1>By status</option>
-                <option value=2>By type</option>
-                <option value=3>By Label ascending</option>
-                <option value=4>By Label descending</option>
-                <option value=5>By date ascending</option>
-                <option value=6>By date descending</option>
-            </select>
-        </div>
-
-
-        <input id="labelInput" class="form-control w-auto" type="search" name="search" placeholder="Search...">
-
-        <input class="btn btn-outline-secondary" type="button" value="Search" id="searchBtn" />
-
-
-
-        <div class="d-flex gap-2 form-control justify-content-center check-box-container">
+        <div class="d-flex gap-2 form-check justify-content-center check-box-container d-flex align-items-center">
             @foreach (FormTypeEnum formType in Enum.GetValues<FormTypeEnum>())
             {
                 <div class="form-check">
@@ -47,8 +41,7 @@
             }
         </div>
 
-        <div class="d-flex gap-2 form-control justify-content-center check-box-container">
-
+        <div class="d-flex gap-2 form-check justify-content-center check-box-container d-flex align-items-center">
 
             @foreach (StatusEnum formStatus in Enum.GetValues<StatusEnum>())
             {
@@ -63,29 +56,9 @@
                 }
             }
         </div>
-
     </div>
 </form>
 
-@* <table class="table table-light table-hover m-5">
-    <thead>
-        <tr>
-            <th>CreatorName</th>
-            <th>Label</th>
-            <th>FormTypeId</th>
-            <th>StatusId</th>
-            <th></th>
-            <th></th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody id="list-container">
-        <vc:form-rows forms="@Model"></vc:form-rows>
-    </tbody>
-</table> *@
-
-<div class="container">
-    <div class="row">
-        <vc:form-rows forms="@Model"></vc:form-rows>
-    </div>
+<div id="list-container" class="d-flex justify-content-center row gap-5">
+    <vc:form-rows forms="@Model"></vc:form-rows>
 </div>

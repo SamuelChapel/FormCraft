@@ -1,0 +1,12 @@
+﻿@model QuestionResponse
+
+<div class="question-container">
+    <p>@Model.Number @Model.Label</p>
+
+    <div class="answers-container">
+        @if (Model.Answers.Any())
+        {
+            <vc:vc:answer-results question-type-id="@Model.QuestionTypeId" answers="@Model.Answers.ToArray()" />
+        }
+    </div>
+</div>

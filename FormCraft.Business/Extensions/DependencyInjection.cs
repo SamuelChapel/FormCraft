@@ -7,6 +7,7 @@ using FormCraft.Business.Contracts.Responses.Form;
 using FormCraft.Business.Contracts.Responses.Question;
 using FormCraft.Business.Services;
 using FormCraft.Entities;
+using FormCraft.Repositories.Contracts.Response;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FormCraft.Business.Extensions;
@@ -32,6 +33,8 @@ public static class DependencyInjection
                 .ForMember(dest => dest.CreatorName, opt => opt.MapFrom(src => src.Creator!.UserName));
             conf.CreateMap<FormWithQuestionsResponse, Form>().ReverseMap();
             conf.CreateMap<Form, SearchFormResponse>();
+
+            conf.CreateMap<AnswerResultResponseRepository, AnswerResultResponse>();
 
         });
 

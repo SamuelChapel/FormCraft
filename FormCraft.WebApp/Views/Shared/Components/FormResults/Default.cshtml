@@ -8,9 +8,9 @@
     @foreach (QuestionResponse question in Model.Questions)
     {
         <div class="col-lg-6">
-            <vc:question question="@question" view="Display" />
+            <vc:question question="@question" view="Result" />
         </div>
     }
     <span>Numbers of question</span>
-@*     <p>@Model.Questions.Count</p>
- *@</div>
+    <p>@Model.Questions.Count</p>
+</div>

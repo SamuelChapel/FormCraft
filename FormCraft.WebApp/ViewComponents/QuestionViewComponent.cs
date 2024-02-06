@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FormCraft.WebApp.ViewComponents;
 
-public enum QuestionViewEnum { Display, Create }
+public enum QuestionViewEnum { Display, Create, Result }
 
 public class QuestionViewComponent : ViewComponent
 {
@@ -11,6 +11,7 @@ public class QuestionViewComponent : ViewComponent
     {
         return view switch
         {
+            QuestionViewEnum.Result => View("Result", question),
             QuestionViewEnum.Display => View(question),
             QuestionViewEnum.Create => View("Create", question),
             _ => View(question),

@@ -4,59 +4,53 @@
 
 @foreach (var form in Model)
 {
-   @*  <tr id="row-@form.Id">
-        <td>@form.CreatorName</td>
-        <td>@form.Label</td>
-        <td>@form.FormTypeId</td>
-        <td>
+    <div class="card col-md-4 p-0" id="row-@form.Id">
+        <div class="card-header text-uppercase d-flex justify-content-between bg-primary bg-opacity-75">
+            @form.CreatorName
+            <span class="fw-bold">
+                @form.FormTypeId
+            </span>
+        </div>
+
+
+        <div class="card-body m-0 p-3 bg-warning bg-opacity-25 d-flex justify-content-between flex-column">
+            <h5 class="card-title fw-bold">@form.Label</h5>
+            <div class="card-text stats d-flex flex-column align-items-center justify-content-center">
+                <h2>Stats</h2>
+                <p>answers : @form.SoundersNumber</p>
+            </div>
+
+            <a asp-controller="Form" asp-action="Details" asp-route-id="@form.Id" class="btn btn-outline-success w-50 align-self-center"> Go to</a>
+
+            <div class="actionBtn d-flex justify-content-evenly my-2">
+                @if (form.StatusId == StatusEnum.InProgress)
+                {
+                    <a class="btn btn-danger delete" data-form-id="@form.Id">Delete</a>
+                }
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a class="btn btn-warning duplicate" data-form-id="@form.Id">Duplicate</a>
+                }
+            </div>
+
             @if (form.StatusId == StatusEnum.InProgress)
             {
-                <div class="d-flex justify-content-center bg-warning text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">
+                <div class="d-flex justify-content-center bg-warning text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3 fw-bold">
                     @form.StatusId
                 </div>
             }
             @if (form.StatusId == StatusEnum.Validated)
             {
-                <div class="d-flex justify-content-center bg-success text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">
+                <div class="d-flex justify-content-center bg-success text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3 fw-bold">
                     @form.StatusId
                 </div>
             }
-
             @if (form.StatusId == StatusEnum.Closed)
             {
-                <div class="d-flex justify-content-center bg-black bg-opacity-50 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">
+                <div class="d-flex justify-content-center bg-black bg-opacity-50 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3 fw-bold">
                     @form.StatusId
                 </div>
             }
-        </td>
-        <td>
-            <a asp-controller="Form" asp-action="Details" asp-route-id="@form.Id" class="btn btn-outline-success"> Go to</a>
-        </td>
-        <td>
-            @if (form.StatusId == StatusEnum.InProgress)
-            {
-                <a class="btn btn-danger delete" data-form-id="@form.Id">Delete</a>
-            }
-        </td>
-        <td>
-            <a class="btn btn-warning duplicate" data-form-id="@form.Id">Duplicate</a>
-        </td>
-    </tr> *@
-
-    <div class="card w-50 col-md-6">
-        <div class="card-header">
-            @form.CreatorName
-        
-        </div>
-        <div class="card-body">
-            
-            <h5 class="card-title">@form.Label</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <p>@form.StatusId</p>
-            <p>  @form.FormTypeId</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-            <a class="btn btn-danger delete" data-form-id="@form.Id">Delete</a>
-            <a class="btn btn-warning duplicate" data-form-id="@form.Id">Duplicate</a>
         </div>
     </div>
 }

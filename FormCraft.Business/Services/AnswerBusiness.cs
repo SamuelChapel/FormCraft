@@ -5,6 +5,7 @@ using FormCraft.Business.Contracts.Requests.Answer;
 using FormCraft.Business.Contracts.Responses.Answer;
 using FormCraft.Entities;
 using FormCraft.Repositories.Contracts;
+using FormCraft.Repositories.Contracts.Response;
 
 namespace FormCraft.Business.Services
 {
@@ -75,7 +76,12 @@ namespace FormCraft.Business.Services
             {
                 throw new BadRequestException("The answer don't exist");
             }
-            
+        }
+
+        public async Task<AnswerResultResponse> ChoiceByQuestion(string formId, int questionId)
+        {
+            var response = await _answerRepository.ChoiceByQuestion(formId, questionId);
+            return _mapper.Map<AnswerResultResponse>(response);
         }
     }
 }
