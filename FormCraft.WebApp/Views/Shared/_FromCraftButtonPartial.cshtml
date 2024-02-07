@@ -1,0 +1,17 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <a class="nav-link" id="craft-now" asp-area="" asp-controller="Form" asp-action="Create">CRAFT Now</a>
+}
+else
+{
+    <a class="nav-link" id="craft-now" asp-area="Identity" asp-page="/Account/Login">CRAFT Now</a>
+}
+
+
+
