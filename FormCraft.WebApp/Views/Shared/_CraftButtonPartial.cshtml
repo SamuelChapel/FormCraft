@@ -1,0 +1,20 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <a asp-area="" asp-controller="Form" asp-action="Create" style="color:#184066;">
+        CRAFT
+    </a>
+}
+else
+{
+    <a asp-area="Identity" asp-page="/Account/Login" style="color:#184066;">
+        CRAFT
+    </a>
+}
+
+
