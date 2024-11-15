@@ -1,0 +1,19 @@
+services:
+  formcraft.webapp:
+    image: ${DOCKER_REGISTRY-}formcraftwebapp
+    container_name: formcraft.webapp
+    build:
+      context: .
+      dockerfile: FormCraft.WebApp/Dockerfile
+
+  formcraft.db:
+    image: postgres:latest
+    container_name: formcraft.db
+    environment:
+      - POSTGRES_DB=formcraft
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./.containers/formcraft-db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432 

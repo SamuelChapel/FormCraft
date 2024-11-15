@@ -82,8 +82,8 @@ public static class DataSeeds
             .RuleFor(f => f.CreatorId, f => f.Random.CollectionItem(appUserIds))
             .RuleFor(f => f.FormTypeId, f => f.Random.CollectionItem(formTypes).Id)
             .RuleFor(f => f.StatusId, f => f.Random.CollectionItem(formStatus).Id)
-            .RuleFor(a => a.CreatedAt, f => f.Date.Past(2))
-            .RuleFor(a => a.UpdatedAt, (f, current) => f.Date.Between(current.CreatedAt, DateTime.UtcNow))
+            .RuleFor(a => a.CreatedAt, f => f.Date.Past(2).ToUniversalTime())
+            .RuleFor(a => a.UpdatedAt, (f, current) => f.Date.Between(current.CreatedAt, DateTime.UtcNow).ToUniversalTime())
             .RuleFor(a => a.Questions, (f, current) =>
                 Enumerable.Range(1, 20)
                           .Select(i => QuestionsSeed(current.Id, i, questionTypes))
@@ -99,8 +99,8 @@ public static class DataSeeds
             .RuleFor(q => q.QuestionTypeId, f => f.Random.CollectionItem(questionTypes).Id)
             .RuleFor(q => q.FormId, formId)
             .RuleFor(q => q.Number, number)
-            .RuleFor(a => a.CreatedAt, f => f.Date.Past(2))
-            .RuleFor(a => a.UpdatedAt, (f, current) => f.Date.Between(current.CreatedAt, DateTime.UtcNow))
+            .RuleFor(a => a.CreatedAt, f => f.Date.Past(2).ToUniversalTime())
+            .RuleFor(a => a.UpdatedAt, (f, current) => f.Date.Between(current.CreatedAt, DateTime.UtcNow).ToUniversalTime())
             .RuleFor(a => a.Answers, (f, current) =>
                 Enumerable.Range(0, f.Random.Number(2, 5))
                           .Select(i => AnswersSeed(current.Id)).ToList())
@@ -113,8 +113,8 @@ public static class DataSeeds
             .RuleFor(a => a.Id, Guid.NewGuid().ToString())
             .RuleFor(a => a.Label, f => f.Random.Word())
             .RuleFor(a => a.QuestionId, questionId)
-            .RuleFor(a => a.CreatedAt, f => f.Date.Past())
-            .RuleFor(a => a.UpdatedAt, (f, current) => f.Date.Between(current.CreatedAt, DateTime.UtcNow))
+            .RuleFor(a => a.CreatedAt, f => f.Date.Past().ToUniversalTime())
+            .RuleFor(a => a.UpdatedAt, (f, current) => f.Date.Between(current.CreatedAt, DateTime.UtcNow).ToUniversalTime())
             .Generate();
     }
 
@@ -126,8 +126,8 @@ public static class DataSeeds
             .RuleFor(a => a.Address, f => f.Person.Address.Street)
             .RuleFor(a => a.Email, f => f.Person.Email)
             .RuleFor(a => a.PhoneNumber, f => f.Person.Phone)
-            .RuleFor(a => a.CreatedAt, f => f.Date.Past(2))
-            .RuleFor(a => a.UpdatedAt, (f, current) => f.Date.Between(current.CreatedAt, DateTime.UtcNow))
+            .RuleFor(a => a.CreatedAt, f => f.Date.Past(2).ToUniversalTime())
+            .RuleFor(a => a.UpdatedAt, (f, current) => f.Date.Between(current.CreatedAt, DateTime.UtcNow).ToUniversalTime())
             .RuleFor(a => a.AppUserAnswers, (f, current) =>
             {
                 var formsNotOwned = formsValidated.Where(f => f.CreatorId != current.Id).ToList();
@@ -137,7 +137,7 @@ public static class DataSeeds
 
                 return answers.Select(a =>
                 {
-                    var date = f.Date.Between(current.CreatedAt, DateTime.UtcNow);
+                    var date = f.Date.Between(current.CreatedAt, DateTime.UtcNow).ToUniversalTime();
 
                     return new AppUserAnswer()
                     {
